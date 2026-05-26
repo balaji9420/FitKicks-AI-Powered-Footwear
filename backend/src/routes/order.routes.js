@@ -1,0 +1,13 @@
+const express = require("express");
+const r = express.Router();
+const c = require("../controllers/order.controller");
+const { protect, adminOnly } = require("../middlewares/auth.middleware");
+r.use(protect);
+r.post("/", c.createOrder);
+r.get("/my-orders", c.getMyOrders);
+r.get("/admin/all", adminOnly, c.getAllOrders);
+r.get("/:id", c.getOrder);
+r.patch("/:id/cancel", c.cancelOrder);
+r.post("/:id/return", c.requestReturn);
+r.patch("/:id/status", adminOnly, c.updateOrderStatus);
+module.exports = r;

@@ -1,0 +1,13 @@
+const express = require("express");
+const r = express.Router();
+const c = require("../controllers/ai.controller");
+const { protect, adminOnly, optionalAuth } = require("../middlewares/auth.middleware");
+const { uploadOutfit } = require("../config/cloudinary");
+r.post("/analyze", optionalAuth, uploadOutfit.single("outfit"), c.analyzeOutfit);
+r.get("/recommendations", c.getSmartRecommendations);
+r.get("/history", protect, c.getMyRecommendations);
+r.get("/analytics", protect, adminOnly, c.getAIAnalytics);
+r.get("/:id", optionalAuth, c.getRecommendation);
+r.post("/:id/feedback", protect, c.submitFeedback);
+r.post("/:id/track", optionalAuth, c.trackInteraction);
+module.exports = r;

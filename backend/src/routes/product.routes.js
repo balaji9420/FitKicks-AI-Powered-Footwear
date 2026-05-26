@@ -1,0 +1,14 @@
+const express = require("express");
+const r = express.Router();
+const c = require("../controllers/product.controller");
+const { protect, adminOnly } = require("../middlewares/auth.middleware");
+const { uploadProduct } = require("../config/cloudinary");
+r.get("/", c.getProducts);
+r.get("/featured", c.getFeaturedProducts);
+r.get("/search", c.searchProducts);
+r.patch("/admin/bulk-update", protect, adminOnly, c.bulkUpdate);
+r.get("/:identifier", c.getProduct);
+r.post("/", protect, adminOnly, uploadProduct.array("images", 10), c.createProduct);
+r.put("/:id", protect, adminOnly, uploadProduct.array("images", 10), c.updateProduct);
+r.delete("/:id", protect, adminOnly, c.deleteProduct);
+module.exports = r;
