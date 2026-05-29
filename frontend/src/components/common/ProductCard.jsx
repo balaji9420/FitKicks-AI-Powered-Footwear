@@ -25,11 +25,24 @@ export default function ProductCard({ product, showAIBadge = false, aiScore = nu
     dispatch(toggleWishlist(product._id))
   }
 
-  const handleAddToCart = (e) => {
+  const handleAddToCart = async (e) => {
     e.preventDefault()
-    if (!isAuthenticated) { navigate('/login'); return }
-    // Navigate to product page for size selection
-    navigate(`/products/${product.slug}`)
+
+    if (!isAuthenticated) {
+      navigate('/login')
+      return
+    }
+
+    try {
+      dispatch(addToCart({
+        productId: product._id,
+        quantity: 1,
+        size: "Default",
+        color: "Black"
+      }))
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const handleCompare = (e) => {
@@ -93,9 +106,8 @@ export default function ProductCard({ product, showAIBadge = false, aiScore = nu
           {/* Action buttons on hover */}
           <div className="absolute bottom-3 right-3 flex flex-col gap-2 translate-x-12 group-hover:translate-x-0 transition-transform duration-300">
             <button onClick={handleWishlist}
-              className={`w-9 h-9 rounded-xl flex items-center justify-center shadow-lg transition-colors ${
-                isWishlisted ? 'bg-red-500 text-white' : 'bg-dark-200/90 backdrop-blur-sm text-gray-300 hover:text-red-400'
-              }`}>
+              className={`w-9 h-9 rounded-xl flex items-center justify-center shadow-lg transition-colors ${isWishlisted ? 'bg-red-500 text-white' : 'bg-dark-200/90 backdrop-blur-sm text-gray-300 hover:text-red-400'
+                }`}>
               <Heart size={15} fill={isWishlisted ? 'currentColor' : 'none'} />
             </button>
             <button onClick={handleCompare}
@@ -113,11 +125,7 @@ export default function ProductCard({ product, showAIBadge = false, aiScore = nu
           </div>
 
           {/* Out of stock overlay */}
-          {!product.isInStock && (
-            <div className="absolute inset-0 bg-dark/70 flex items-center justify-center">
-              <span className="badge-danger">Out of Stock</span>
-            </div>
-          )}
+
         </div>
 
         {/* Info */}

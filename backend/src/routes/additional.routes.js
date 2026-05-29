@@ -2,7 +2,7 @@ const express = require("express");
 const { protect, adminOnly, optionalAuth } = require("../middlewares/auth.middleware");
 const { asyncHandler, AppError } = require("../utils/helpers");
 const { Cart, Wishlist, Review, Category, Brand, Coupon, Notification } = require("../models/index.models");
-const Product = require("../models/Product.model");
+const Product = require("../models/product.model");
 const User = require("../models/User.model");
 const Order = require("../models/Order.model");
 
@@ -16,13 +16,13 @@ cartRouter.get("/", asyncHandler(async (req, res) => {
 }));
 
 cartRouter.post("/add", asyncHandler(async (req, res) => {
-  const { productId, size, color, quantity=1 } = req.body;
+  const { productId, size, color, quantity = 1 } = req.body;
   const product = await Product.findById(productId);
   if (!product || !product.isActive) throw new AppError("Product not found", 404);
   let cart = await Cart.findOne({ user: req.user._id });
   if (!cart) cart = new Cart({ user: req.user._id, items: [] });
-  const idx = cart.items.findIndex(i => i.product.toString()===productId && i.size===size && i.color===color);
-  if (idx >= 0) cart.items[idx].quantity = Math.min(cart.items[idx].quantity+quantity, 10);
+  const idx = cart.items.findIndex(i => i.product.toString() === productId && i.size === size && i.color === color);
+  if (idx >= 0) cart.items[idx].quantity = Math.min(cart.items[idx].quantity + quantity, 10);
   else cart.items.push({ product: productId, size, color, quantity, price: product.price });
   cart.lastUpdated = new Date();
   await cart.save();
@@ -60,7 +60,7 @@ cartRouter.post("/apply-coupon", asyncHandler(async (req, res) => {
   const subtotal = (cart?.items || []).reduce((sum, i) => sum + i.price * i.quantity, 0);
   if (subtotal < coupon.minOrderAmount) throw new AppError(`Min order ₹${coupon.minOrderAmount} required`, 400);
   let discount = 0;
-  if (coupon.type === "percentage") discount = Math.min(subtotal*coupon.value/100, coupon.maxDiscountAmount||Infinity);
+  if (coupon.type === "percentage") discount = Math.min(subtotal * coupon.value / 100, coupon.maxDiscountAmount || Infinity);
   else if (coupon.type === "fixed") discount = Math.min(coupon.value, subtotal);
   if (cart) { cart.couponCode = coupon.code; cart.couponId = coupon._id; cart.couponDiscount = Math.round(discount); await cart.save(); }
   res.json({ success: true, message: `Coupon applied! Save ₹${Math.round(discount)}`, data: { discount: Math.round(discount) } });
@@ -77,7 +77,7 @@ wishlistRouter.post("/toggle", asyncHandler(async (req, res) => {
   const { productId } = req.body;
   let wl = await Wishlist.findOne({ user: req.user._id });
   if (!wl) wl = new Wishlist({ user: req.user._id, products: [] });
-  const idx = wl.products.findIndex(p => p.product?.toString()===productId);
+  const idx = wl.products.findIndex(p => p.product?.toString() === productId);
   let added;
   if (idx >= 0) { wl.products.splice(idx, 1); added = false; }
   else { wl.products.push({ product: productId }); added = true; }
@@ -88,20 +88,20 @@ wishlistRouter.post("/toggle", asyncHandler(async (req, res) => {
 // ── Reviews ───────────────────────────────────────────────────────────────────
 const reviewRouter = express.Router();
 reviewRouter.get("/product/:productId", asyncHandler(async (req, res) => {
-  const { page=1, limit=10 } = req.query;
+  const { page = 1, limit = 10 } = req.query;
   const [reviews, total] = await Promise.all([
-    Review.find({ product: req.params.productId, isApproved: true, isHidden: false }).populate("user","firstName lastName avatar").sort("-createdAt").skip((page-1)*limit).limit(+limit).lean(),
+    Review.find({ product: req.params.productId, isApproved: true, isHidden: false }).populate("user", "firstName lastName avatar").sort("-createdAt").skip((page - 1) * limit).limit(+limit).lean(),
     Review.countDocuments({ product: req.params.productId, isApproved: true }),
   ]);
-  res.json({ success: true, data: { reviews, pagination: { total, page: +page, pages: Math.ceil(total/limit) } } });
+  res.json({ success: true, data: { reviews, pagination: { total, page: +page, pages: Math.ceil(total / limit) } } });
 }));
 reviewRouter.post("/", protect, asyncHandler(async (req, res) => {
   const { product, rating, title, comment, size, fit, comfort, durability, style, value } = req.body;
   if (await Review.findOne({ product, user: req.user._id })) throw new AppError("Already reviewed", 409);
   const review = await Review.create({ product, user: req.user._id, rating, title, comment, size, fit, comfort, durability, style, value });
   const stats = await Review.aggregate([{ $match: { product: review.product } }, { $group: { _id: "$product", avg: { $avg: "$rating" }, count: { $sum: 1 } } }]);
-  if (stats[0]) await Product.findByIdAndUpdate(product, { averageRating: Math.round(stats[0].avg*10)/10, totalReviews: stats[0].count });
-  await review.populate("user","firstName lastName avatar");
+  if (stats[0]) await Product.findByIdAndUpdate(product, { averageRating: Math.round(stats[0].avg * 10) / 10, totalReviews: stats[0].count });
+  await review.populate("user", "firstName lastName avatar");
   res.status(201).json({ success: true, data: { review } });
 }));
 
@@ -140,7 +140,7 @@ notifRouter.patch("/read-all", asyncHandler(async (req, res) => { await Notifica
 const analyticsRouter = express.Router();
 analyticsRouter.use(protect, adminOnly);
 analyticsRouter.get("/dashboard", asyncHandler(async (req, res) => {
-  const { days=30 } = req.query;
+  const { days = 30 } = req.query;
   const since = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
   const [totalRevenue, totalOrders, pendingOrders, newUsers, revenueByDay, topProducts, ordersByStatus, lowStock] = await Promise.all([
     Order.aggregate([{ $match: { paymentStatus: "paid", createdAt: { $gte: since } } }, { $group: { _id: null, total: { $sum: "$totalAmount" } } }]),
@@ -152,7 +152,7 @@ analyticsRouter.get("/dashboard", asyncHandler(async (req, res) => {
     Order.aggregate([{ $group: { _id: "$status", count: { $sum: 1 } } }]),
     Product.find({ isActive: true, totalStock: { $lt: 10 } }).select("name totalStock images").limit(10).lean(),
   ]);
-  res.json({ success: true, data: { summary: { totalRevenue: totalRevenue[0]?.total||0, totalOrders, pendingOrders, newUsers }, revenueByDay, topProducts, ordersByStatus, lowStockProducts: lowStock } });
+  res.json({ success: true, data: { summary: { totalRevenue: totalRevenue[0]?.total || 0, totalOrders, pendingOrders, newUsers }, revenueByDay, topProducts, ordersByStatus, lowStockProducts: lowStock } });
 }));
 
 // ── Upload ────────────────────────────────────────────────────────────────────

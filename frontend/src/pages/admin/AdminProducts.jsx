@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Plus, Search, Edit, Trash2, Eye, TrendingUp, Star, RefreshCw, Upload } from 'lucide-react'
 import api from '../../services/api'
 import toast from 'react-hot-toast'
+import AdminProductForm from "./AdminProductForm";
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([])
@@ -87,11 +88,11 @@ export default function AdminProducts() {
             className="input-field pl-9 py-2 text-sm w-full" />
         </div>
         {[
-          { label: 'Type', key: 'shoeType', opts: [['','All Types'],['sneakers','Sneakers'],['running','Running'],['sports','Sports'],['casual','Casual'],['formal','Formal'],['limited-edition','Limited Edition']] },
-          { label: 'Status', key: 'isActive', opts: [['','All'],['true','Active'],['false','Inactive']] },
-          { label: 'Sort', key: 'sort', opts: [['-createdAt','Newest'],['-totalSold','Top Selling'],['-averageRating','Top Rated'],['price','Price ↑'],['-price','Price ↓']] },
+          { label: 'Type', key: 'shoeType', opts: [['', 'All Types'], ['sneakers', 'Sneakers'], ['running', 'Running'], ['sports', 'Sports'], ['casual', 'Casual'], ['formal', 'Formal'], ['limited-edition', 'Limited Edition']] },
+          { label: 'Status', key: 'isActive', opts: [['', 'All'], ['true', 'Active'], ['false', 'Inactive']] },
+          { label: 'Sort', key: 'sort', opts: [['-createdAt', 'Newest'], ['-totalSold', 'Top Selling'], ['-averageRating', 'Top Rated'], ['price', 'Price ↑'], ['-price', 'Price ↓']] },
         ].map(({ label, key, opts }) => (
-          <select key={key} value={filter[key]} onChange={e => setFilter(p => ({...p, [key]: e.target.value}))}
+          <select key={key} value={filter[key]} onChange={e => setFilter(p => ({ ...p, [key]: e.target.value }))}
             className="input-field py-2 text-sm w-auto">
             {opts.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
@@ -141,7 +142,7 @@ export default function AdminProducts() {
                       </div>
                     </div>
                   </td>
-                  <td className="p-3 capitalize text-gray-400">{product.shoeType?.replace(/-/g,' ')}</td>
+                  <td className="p-3 capitalize text-gray-400">{product.shoeType?.replace(/-/g, ' ')}</td>
                   <td className="p-3 font-semibold">₹{product.price?.toLocaleString('en-IN')}</td>
                   <td className="p-3">
                     <span className={`badge text-xs ${product.totalStock === 0 ? 'badge-danger' : product.totalStock < 5 ? 'badge-warning' : 'badge-success'}`}>
@@ -155,11 +156,11 @@ export default function AdminProducts() {
                   </td>
                   <td className="p-3">
                     <div className="flex gap-1 flex-wrap">
-                      {product.isTrending    && <span className="badge bg-orange-500/20 text-orange-400 text-[10px]">🔥</span>}
-                      {product.isNewArrival  && <span className="badge bg-blue-500/20 text-blue-400 text-[10px]">NEW</span>}
-                      {product.isBestSeller  && <span className="badge bg-yellow-500/20 text-yellow-400 text-[10px]">⭐</span>}
-                      {product.isFlashSale   && <span className="badge bg-red-500/20 text-red-400 text-[10px]">⚡</span>}
-                      {!product.isActive     && <span className="badge-danger text-[10px]">OFF</span>}
+                      {product.isTrending && <span className="badge bg-orange-500/20 text-orange-400 text-[10px]">🔥</span>}
+                      {product.isNewArrival && <span className="badge bg-blue-500/20 text-blue-400 text-[10px]">NEW</span>}
+                      {product.isBestSeller && <span className="badge bg-yellow-500/20 text-yellow-400 text-[10px]">⭐</span>}
+                      {product.isFlashSale && <span className="badge bg-red-500/20 text-red-400 text-[10px]">⚡</span>}
+                      {!product.isActive && <span className="badge-danger text-[10px]">OFF</span>}
                     </div>
                   </td>
                   <td className="p-3">
@@ -187,20 +188,26 @@ export default function AdminProducts() {
         {/* Pagination */}
         {pagination && pagination.pages > 1 && (
           <div className="flex items-center justify-between p-4 border-t border-white/5">
-            <span className="text-xs text-gray-500">Showing {(page-1)*15+1}–{Math.min(page*15, pagination.total)} of {pagination.total}</span>
+            <span className="text-xs text-gray-500">Showing {(page - 1) * 15 + 1}–{Math.min(page * 15, pagination.total)} of {pagination.total}</span>
             <div className="flex gap-1">
-              <button disabled={page<=1} onClick={() => setPage(p=>p-1)} className="px-3 py-1.5 rounded-lg bg-dark-300 text-sm disabled:opacity-40">←</button>
+              <button disabled={page <= 1} onClick={() => setPage(p => p - 1)} className="px-3 py-1.5 rounded-lg bg-dark-300 text-sm disabled:opacity-40">←</button>
               {[...Array(Math.min(pagination.pages, 5))].map((_, i) => (
-                <button key={i} onClick={() => setPage(i+1)}
-                  className={`w-8 h-8 rounded-lg text-sm ${page===i+1 ? 'bg-primary text-white' : 'bg-dark-300 text-gray-400 hover:bg-dark-400'}`}>
-                  {i+1}
+                <button key={i} onClick={() => setPage(i + 1)}
+                  className={`w-8 h-8 rounded-lg text-sm ${page === i + 1 ? 'bg-primary text-white' : 'bg-dark-300 text-gray-400 hover:bg-dark-400'}`}>
+                  {i + 1}
                 </button>
               ))}
-              <button disabled={page>=pagination.pages} onClick={() => setPage(p=>p+1)} className="px-3 py-1.5 rounded-lg bg-dark-300 text-sm disabled:opacity-40">→</button>
+              <button disabled={page >= pagination.pages} onClick={() => setPage(p => p + 1)} className="px-3 py-1.5 rounded-lg bg-dark-300 text-sm disabled:opacity-40">→</button>
             </div>
           </div>
         )}
       </div>
+      {showForm && (
+        <AdminProductForm
+          onClose={() => setShowForm(false)}
+          onSuccess={load}
+        />
+      )}
     </div>
   )
 }

@@ -1,5 +1,5 @@
 const OpenAI = require("openai");
-const Product = require("../models/Product.model");
+const Product = require("../models/product.model");
 const AIRecommendation = require("../models/AIRecommendation.model");
 const { logger } = require("../utils/logger");
 
@@ -25,10 +25,12 @@ const analyzeOutfit = async (imageUrl) => {
 
   const response = await openai.chat.completions.create({
     model: "gpt-4o",
-    messages: [{ role: "user", content: [
-      { type: "image_url", image_url: { url: imageUrl, detail: "high" } },
-      { type: "text", text: prompt },
-    ]}],
+    messages: [{
+      role: "user", content: [
+        { type: "image_url", image_url: { url: imageUrl, detail: "high" } },
+        { type: "text", text: prompt },
+      ]
+    }],
     max_tokens: 800, temperature: 0.3,
   });
 
@@ -61,7 +63,7 @@ const scoreProduct = (product, analysis) => {
   // Gender (0-15)
   if (product.gender === gender || product.gender === "unisex") score += 15;
   // Shoe type (0-10)
-  const styleMap = { sneakers:["sneaker","casual","street"], running:["runner","athletic","gym"], sports:["sport","active","gym"], casual:["casual","everyday"], formal:["formal","office"] };
+  const styleMap = { sneakers: ["sneaker", "casual", "street"], running: ["runner", "athletic", "gym"], sports: ["sport", "active", "gym"], casual: ["casual", "everyday"], formal: ["formal", "office"] };
   const kws = styleMap[product.shoeType] || [];
   if ((idealShoeStyles || []).some(s => kws.some(k => s.toLowerCase().includes(k)))) { score += 10; reasons.push("Shoe style aligns with your look"); }
   // Rating boost
@@ -111,7 +113,7 @@ const generateRecommendations = async ({ imageUrl, userId, sessionId }) => {
           max_tokens: 120, temperature: 0.7,
         });
         whyExplanation = expRes.choices[0].message.content;
-      } catch {}
+      } catch { }
     }
 
     record.analysis = { ...analysis, whyExplanation };

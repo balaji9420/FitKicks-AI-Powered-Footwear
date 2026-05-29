@@ -23,7 +23,7 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState('razorpay')
   const [isPlacing, setIsPlacing] = useState(false)
   const [showAddAddress, setShowAddAddress] = useState(false)
-  const [newAddress, setNewAddress] = useState({ label:'Home', fullName:'', phone:'', street:'', city:'', state:'', pincode:'', country:'India' })
+  const [newAddress, setNewAddress] = useState({ label: 'Home', fullName: '', phone: '', street: '', city: '', state: '', pincode: '', country: 'India' })
 
   const shippingCost = subtotal >= 999 ? 0 : 99
   const taxAmount = Math.round(subtotal * 0.18)
@@ -98,10 +98,9 @@ export default function CheckoutPage() {
         <div className="flex items-center gap-2 mb-10">
           {['Delivery', 'Payment', 'Review'].map((label, i) => (
             <div key={label} className="flex items-center gap-2">
-              <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${
-                i === step ? 'bg-primary text-white' : i < step ? 'bg-green-500/20 text-green-400' : 'bg-dark-300 text-gray-500'
-              }`}>
-                {i < step ? <CheckCircle size={14} /> : <span className="w-4 h-4 flex items-center justify-center text-xs">{i+1}</span>}
+              <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${i === step ? 'bg-primary text-white' : i < step ? 'bg-green-500/20 text-green-400' : 'bg-dark-300 text-gray-500'
+                }`}>
+                {i < step ? <CheckCircle size={14} /> : <span className="w-4 h-4 flex items-center justify-center text-xs">{i + 1}</span>}
                 {label}
               </div>
               {i < 2 && <div className="h-px w-8 bg-white/10 flex-shrink-0" />}
@@ -148,11 +147,11 @@ export default function CheckoutPage() {
                   <div className="card p-5 space-y-3">
                     <h3 className="font-medium text-sm">New Address</h3>
                     <div className="grid grid-cols-2 gap-3">
-                      {[['fullName','Full Name'],['phone','Phone'],['street','Street Address'],['city','City'],['state','State'],['pincode','Pincode']].map(([key, label]) => (
+                      {[['fullName', 'Full Name'], ['phone', 'Phone'], ['street', 'Street Address'], ['city', 'City'], ['state', 'State'], ['pincode', 'Pincode']].map(([key, label]) => (
                         <div key={key} className={key === 'street' ? 'col-span-2' : ''}>
                           <label className="text-xs text-gray-400 mb-1 block">{label}</label>
                           <input className="input-field py-2 text-sm" value={newAddress[key]}
-                            onChange={e => setNewAddress(p => ({...p, [key]: e.target.value}))} placeholder={label} />
+                            onChange={e => setNewAddress(p => ({ ...p, [key]: e.target.value }))} placeholder={label} />
                         </div>
                       ))}
                     </div>
@@ -176,7 +175,7 @@ export default function CheckoutPage() {
                 <h2 className="font-semibold flex items-center gap-2"><CreditCard size={16} className="text-primary" />Payment Method</h2>
                 {[
                   { id: 'razorpay', label: 'Online Payment', sub: 'Credit/Debit, UPI, Net Banking', icon: '💳' },
-                  { id: 'cod',      label: 'Cash on Delivery', sub: 'Pay when your order arrives', icon: '💵' },
+                  { id: 'cod', label: 'Cash on Delivery', sub: 'Pay when your order arrives', icon: '💵' },
                 ].map(({ id, label, sub, icon }) => (
                   <div key={id} onClick={() => setPaymentMethod(id)}
                     className={`card p-4 cursor-pointer flex items-center gap-4 transition-all ${paymentMethod === id ? 'border-primary/50 bg-primary/5' : ''}`}>

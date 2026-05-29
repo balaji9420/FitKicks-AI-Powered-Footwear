@@ -65,12 +65,12 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     if (!isAuthenticated) { navigate('/login'); return }
-    if (!selectedSize) { toast.error('Please select a size'); return }
-    if (!selectedColor) { toast.error('Please select a color'); return }
+    const finalSize = selectedSize || "Default"
+    const finalColor = selectedColor || "Black"
     dispatch(addToCart({
       productId: product._id,
-      size: selectedSize,
-      color: selectedColor.name,
+      size: finalSize,
+      color: finalColor,
       quantity,
     }))
   }
@@ -157,9 +157,8 @@ export default function ProductDetailPage() {
               <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
                 {images.map((img, i) => (
                   <button key={i} onClick={() => setActiveImage(i)}
-                    className={`w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all ${
-                      activeImage === i ? 'border-primary' : 'border-transparent opacity-60 hover:opacity-100'
-                    }`}>
+                    className={`w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all ${activeImage === i ? 'border-primary' : 'border-transparent opacity-60 hover:opacity-100'
+                      }`}>
                     <img src={img.url} alt="" className="w-full h-full object-cover" />
                   </button>
                 ))}
@@ -207,11 +206,7 @@ export default function ProductDetailPage() {
 
             {/* Stock */}
             <div>
-              {product.isInStock ? (
-                <span className="badge-success">✓ In Stock</span>
-              ) : (
-                <span className="badge-danger">Out of Stock</span>
-              )}
+              <span className="badge-success">✓ In Stock</span>
             </div>
 
             {/* Color Selection */}
@@ -224,9 +219,8 @@ export default function ProductDetailPage() {
                   {product.colors.map((color) => (
                     <button key={color.name} onClick={() => { setSelectedColor(color); setSelectedSize(null) }}
                       title={color.name}
-                      className={`w-8 h-8 rounded-full border-2 transition-all ${
-                        selectedColor?.name === color.name ? 'border-primary scale-110' : 'border-transparent hover:border-gray-500'
-                      }`}
+                      className={`w-8 h-8 rounded-full border-2 transition-all ${selectedColor?.name === color.name ? 'border-primary scale-110' : 'border-transparent hover:border-gray-500'
+                        }`}
                       style={{ background: color.hex || '#888' }}
                     />
                   ))}
@@ -249,13 +243,12 @@ export default function ProductDetailPage() {
                     const lowStock = stock > 0 && stock <= 3
                     return (
                       <button key={size} disabled={oos} onClick={() => setSelectedSize(size)}
-                        className={`relative px-3 py-2 rounded-xl text-sm border transition-all ${
-                          selectedSize === size
-                            ? 'border-primary bg-primary/15 text-primary font-semibold'
-                            : oos
+                        className={`relative px-3 py-2 rounded-xl text-sm border transition-all ${selectedSize === size
+                          ? 'border-primary bg-primary/15 text-primary font-semibold'
+                          : oos
                             ? 'border-white/5 text-gray-600 cursor-not-allowed line-through'
                             : 'border-white/10 text-gray-300 hover:border-primary/50 hover:text-white'
-                        }`}>
+                          }`}>
                         {size}
                         {lowStock && !oos && (
                           <span className="absolute -top-1 -right-1 w-2 h-2 bg-orange-400 rounded-full" />
@@ -288,14 +281,13 @@ export default function ProductDetailPage() {
 
             {/* CTA */}
             <div className="flex gap-3">
-              <button onClick={handleAddToCart} disabled={!product.isInStock || cartLoading}
+              <button onClick={handleAddToCart} disabled={cartLoading}
                 className="btn-primary flex-1 flex items-center justify-center gap-2 disabled:opacity-60">
                 <ShoppingBag size={16} /> Add to Cart
               </button>
               <button onClick={handleWishlist}
-                className={`w-12 h-12 rounded-xl border-2 flex items-center justify-center transition-all ${
-                  isWishlisted ? 'bg-red-500 border-red-500 text-white' : 'border-white/20 text-gray-400 hover:border-red-500/50 hover:text-red-400'
-                }`}>
+                className={`w-12 h-12 rounded-xl border-2 flex items-center justify-center transition-all ${isWishlisted ? 'bg-red-500 border-red-500 text-white' : 'border-white/20 text-gray-400 hover:border-red-500/50 hover:text-red-400'
+                  }`}>
                 <Heart size={16} fill={isWishlisted ? 'currentColor' : 'none'} />
               </button>
               <button onClick={() => dispatch(addToCompare(product))}
@@ -307,9 +299,9 @@ export default function ProductDetailPage() {
             {/* Features */}
             <div className="grid grid-cols-3 gap-3 pt-2">
               {[
-                { icon: Truck,     label: 'Free Delivery', sub: 'Orders above ₹999' },
-                { icon: RefreshCw, label: '7-day Returns',  sub: 'Easy hassle-free' },
-                { icon: Shield,    label: '100% Authentic', sub: 'Verified products' },
+                { icon: Truck, label: 'Free Delivery', sub: 'Orders above ₹999' },
+                { icon: RefreshCw, label: '7-day Returns', sub: 'Easy hassle-free' },
+                { icon: Shield, label: '100% Authentic', sub: 'Verified products' },
               ].map(({ icon: Icon, label, sub }) => (
                 <div key={label} className="flex flex-col items-center text-center p-3 rounded-xl bg-dark-200">
                   <Icon size={16} className="text-primary mb-1" />
@@ -326,9 +318,8 @@ export default function ProductDetailPage() {
           <div className="flex gap-1 p-1 bg-dark-200 rounded-2xl w-fit mb-8">
             {['details', 'features', 'reviews'].map((tab) => (
               <button key={tab} onClick={() => setActiveTab(tab)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-medium capitalize transition-colors ${
-                  activeTab === tab ? 'bg-primary text-white' : 'text-gray-400 hover:text-white'
-                }`}>
+                className={`px-5 py-2.5 rounded-xl text-sm font-medium capitalize transition-colors ${activeTab === tab ? 'bg-primary text-white' : 'text-gray-400 hover:text-white'
+                  }`}>
                 {tab} {tab === 'reviews' && product.totalReviews > 0 && `(${product.totalReviews})`}
               </button>
             ))}
@@ -379,7 +370,7 @@ export default function ProductDetailPage() {
                       <div className="text-xs text-gray-500 mt-1">{product.totalReviews} reviews</div>
                     </div>
                     <div className="flex-1 space-y-1.5">
-                      {[5,4,3,2,1].map((n) => {
+                      {[5, 4, 3, 2, 1].map((n) => {
                         const count = product.ratingDistribution?.[n] || 0
                         const pct = product.totalReviews ? (count / product.totalReviews * 100) : 0
                         return (
