@@ -12,6 +12,8 @@ const productSchema = new mongoose.Schema({
   slug: { type: String, unique: true, lowercase: true },
   description: { type: String, required: true },
   shortDescription: { type: String },
+  originalModelYear: Number,
+  officialUrl: String,
   price: { type: Number, required: true, min: 0 },
   comparePrice: { type: Number, min: 0 },
   costPrice: { type: Number, min: 0 },
@@ -91,4 +93,6 @@ productSchema.pre("save", function (next) {
   next();
 });
 
-module.exports = mongoose.model("Product", productSchema);
+module.exports =
+  mongoose.models.Product ||
+  mongoose.model("Product", productSchema);

@@ -50,54 +50,42 @@ exports.getProduct = asyncHandler(async (req, res) => {
 });
 
 exports.createProduct = asyncHandler(async (req, res) => {
-  try {
+  console.log("BODY:", req.body);
+  console.log("FILES:", req.files);
 
-    console.log("BODY:", req.body);
-    console.log("FILES:", req.files);
+  const data = {
+    ...req.body,
+    createdBy: req.user._id,
+  };
 
-    const data = {
-      ...req.body,
-      createdBy: req.user._id,
-    };
-
-    // Handle uploaded images
-    if (req.files && req.files.length > 0) {
-      data.images = req.files.map((file, index) => ({
-        url: file.path || file.secure_url,
-        publicId: file.filename || file.public_id,
-        isPrimary: index === 0,
-      }));
-    }
-
-    // Temporary default values
-    if (!data.category) delete data.category;
-    if (!data.brand) delete data.brand;
-
-    // Convert numbers properly
-    data.price = Number(data.price || 0);
-    data.totalStock = Number(data.stock || 0);
-
-    const product = await Product.create(data);
-
-    res.status(201).json({
-      success: true,
-      message: "Product created successfully",
-      data: {
-        product,
-      },
-    });
-
-  } catch (error) {
-
-    console.error("CREATE PRODUCT ERROR:");
-    console.error(error);
-
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+  // Handle uploaded images
+  if (req.files && req.files.length > 0) {
+    data.images = req.files.map((file, index) => ({
+      url: file.path || file.secure_url,
+      publicId: file.filename || file.public_id,
+      isPrimary: index === 0,
+    }));
   }
+
+  // Temporary default values
+  if (!data.category) delete data.category;
+  if (!data.brand) delete data.brand;
+
+  // Convert numbers properly
+  data.price = Number(data.price || 0);
+  data.totalStock = Number(data.stock || 0);
+
+  const product = await Product.create(data);
+
+  res.status(201).json({
+    success: true,
+    message: "Product created successfully",
+    data: {
+      product,
+    },
+  });
 });
+
 exports.updateProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
   if (!product) throw new AppError("Product not found", 404);
@@ -149,4 +137,40 @@ exports.bulkUpdate = asyncHandler(async (req, res) => {
   Object.keys(updates).forEach(k => { if (allowed.includes(k)) safe[k] = updates[k]; });
   const result = await Product.updateMany({ _id: { $in: productIds } }, { $set: safe });
   res.json({ success: true, message: `${result.modifiedCount} products updated`, data: { modifiedCount: result.modifiedCount } });
+});
+
+exports.getInventory = asyncHandler(async (req, res) => {
+  const products = await Product.find({ isActive: true })
+    .select("name slug images totalStock isInStock colors.name colors.sizeStock")
+    .populate("brand", "name")
+    .sort({ totalStock: 1, name: 1 })
+    .limit(100)
+    .lean();
+  res.json({ success: true, data: { products } });
+});
+
+exports.updateInventory = asyncHandler(async (req, res) => {
+  if (!Array.isArray(req.body.colors)) throw new AppError("Inventory must include color and size stock", 400);
+  const product = await Product.findById(req.params.id);
+  if (!product || !product.isActive) throw new AppError("Product not found", 404);
+
+  for (const colorUpdate of req.body.colors) {
+    const color = product.colors.find(item => item.name === colorUpdate.name);
+    if (!color || !Array.isArray(colorUpdate.sizeStock)) throw new AppError("Unknown product color", 400);
+    for (const sizeUpdate of colorUpdate.sizeStock) {
+      const size = color.sizeStock.find(item => item.size === sizeUpdate.size);
+      const quantity = Number(sizeUpdate.stock);
+      if (!size || !Number.isInteger(quantity) || quantity < 0 || quantity > 100000) {
+        throw new AppError("Each size needs a whole-number stock quantity from 0 to 100000", 400);
+      }
+      size.stock = quantity;
+    }
+  }
+
+  await product.save();
+  res.json({
+    success: true,
+    message: "Inventory updated",
+    data: { product: { _id: product._id, totalStock: product.totalStock, isInStock: product.isInStock, colors: product.colors } },
+  });
 });

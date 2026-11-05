@@ -38,12 +38,6 @@ const uploadProduct = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-const uploadOutfit = multer({
-  storage: makeStorage('ai-outfits', [{ width: 1024, height: 1024, crop: 'limit', quality: 'auto:good' }]),
-  fileFilter,
-  limits: { fileSize: 10 * 1024 * 1024 },
-});
-
 const uploadAvatar = multer({
   storage: makeStorage('avatars', [{ width: 400, height: 400, crop: 'fill', gravity: 'face', quality: 'auto' }]),
   fileFilter,
@@ -55,4 +49,4 @@ const deleteImage = async (publicId) => {
   catch (e) { console.error('Cloudinary delete error:', e); }
 };
 
-module.exports = { cloudinary, uploadProduct, uploadOutfit, uploadAvatar, deleteImage };
+module.exports = { cloudinary, uploadProduct, uploadAvatar, deleteImage };

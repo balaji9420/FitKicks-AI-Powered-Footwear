@@ -1,18 +1,77 @@
 import { useState, useRef, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Upload, Sparkles, X, ChevronRight, Star, ShoppingBag, Loader2, RefreshCw, Info } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Upload, Sparkles, X, ChevronRight, Star, Loader2, RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { analyzeOutfit, setUploadPreview, clearAnalysis, selectAI } from '../../redux/slices/aiSlice'
-import { addToCart } from '../../redux/slices/cartSlice'
-import { toggleWishlist } from '../../redux/slices/wishlistSlice'
 import { selectIsAuthenticated } from '../../redux/slices/authSlice'
+import api from '../../services/api'
+import toast from 'react-hot-toast'
 
 const STYLE_COLORS = {
   casual: '#FF6B35', formal: '#4A90D9', streetwear: '#9B59B6',
   sporty: '#27AE60', party: '#E74C3C', athleisure: '#F39C12',
   business: '#2C3E50', minimalist: '#7F8C8D',
 }
+
+const detectDominantColors = (file) => new Promise((resolve, reject) => {
+  const image = new Image()
+  const objectUrl = URL.createObjectURL(file)
+  image.onload = () => {
+    try {
+      const canvas = document.createElement('canvas')
+      const size = 64
+      canvas.width = size
+      canvas.height = size
+      const context = canvas.getContext('2d', { willReadFrequently: true })
+      if (!context) throw new Error('Image color analysis is unavailable in this browser')
+      context.drawImage(image, 0, 0, size, size)
+      const pixels = context.getImageData(0, 0, size, size).data
+      const counts = new Map()
+
+      for (let index = 0; index < pixels.length; index += 16) {
+        const red = pixels[index]
+        const green = pixels[index + 1]
+        const blue = pixels[index + 2]
+        const max = Math.max(red, green, blue)
+        const min = Math.min(red, green, blue)
+        const brightness = max / 255
+        let name
+
+        if (brightness < 0.18) name = 'black'
+        else if (max - min < 24) name = brightness > 0.82 ? 'white' : 'gray'
+        else {
+          let hue
+          if (max === red) hue = ((green - blue) / (max - min) + (green < blue ? 6 : 0)) * 60
+          else if (max === green) hue = ((blue - red) / (max - min) + 2) * 60
+          else hue = ((red - green) / (max - min) + 4) * 60
+
+          if (hue < 15 || hue >= 345) name = 'red'
+          else if (hue < 40) name = 'orange'
+          else if (hue < 70) name = 'yellow'
+          else if (hue < 165) name = 'green'
+          else if (hue < 195) name = 'teal'
+          else if (hue < 255) name = 'blue'
+          else if (hue < 290) name = 'purple'
+          else name = 'pink'
+        }
+
+        counts.set(name, (counts.get(name) || 0) + 1)
+      }
+
+      resolve([...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name]) => name))
+    } catch (error) {
+      reject(error)
+    } finally {
+      URL.revokeObjectURL(objectUrl)
+    }
+  }
+  image.onerror = () => {
+    URL.revokeObjectURL(objectUrl)
+    reject(new Error('Could not read the selected outfit image'))
+  }
+  image.src = objectUrl
+})
 
 export default function AIStylePage() {
   const dispatch = useDispatch()
@@ -22,10 +81,17 @@ export default function AIStylePage() {
   const [dragOver, setDragOver] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
   const [activeTab, setActiveTab] = useState('all') // all | premium | mid | budget
+  const [colorPalette, setColorPalette] = useState([])
+  const [style, setStyle] = useState('casual')
+  const [occasion, setOccasion] = useState('casual')
+  const [gender, setGender] = useState('unisex')
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false)
+  const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false)
 
   const handleFile = useCallback((file) => {
     if (!file || !file.type.startsWith('image/')) return
     setSelectedFile(file)
+    detectDominantColors(file).then(setColorPalette).catch(() => setColorPalette([]))
     const reader = new FileReader()
     reader.onloadend = () => dispatch(setUploadPreview(reader.result))
     reader.readAsDataURL(file)
@@ -39,14 +105,45 @@ export default function AIStylePage() {
 
   const handleAnalyze = async () => {
     if (!selectedFile) return
-    const formData = new FormData()
-    formData.append('outfit', selectedFile)
-    dispatch(analyzeOutfit(formData))
+    let detectedColors
+    try {
+      detectedColors = await detectDominantColors(selectedFile)
+      setColorPalette(detectedColors)
+    } catch (colorError) {
+      toast.error(colorError.message || 'Could not analyze the outfit image.')
+      return
+    }
+
+    dispatch(analyzeOutfit({
+      colorPalette: detectedColors,
+      style,
+      occasion,
+      gender,
+    }))
   }
 
   const handleReset = () => {
     dispatch(clearAnalysis())
     setSelectedFile(null)
+    setColorPalette([])
+    setFeedbackSubmitted(false)
+  }
+
+  const handleFeedback = async (helpful) => {
+    if (!currentAnalysis?.recommendationId || !isAuthenticated || isSubmittingFeedback) return
+    setIsSubmittingFeedback(true)
+    try {
+      await api.post(`/ai/${currentAnalysis.recommendationId}/feedback`, {
+        helpful,
+        rating: helpful ? 5 : 2,
+      })
+      setFeedbackSubmitted(true)
+      toast.success('Thanks — your feedback will improve your future matches.')
+    } catch (requestError) {
+      toast.error(requestError.response?.data?.message || 'Could not save your feedback.')
+    } finally {
+      setIsSubmittingFeedback(false)
+    }
   }
 
   const recommendations = currentAnalysis?.recommendations || []
@@ -60,13 +157,13 @@ export default function AIStylePage() {
         {/* Header */}
         <div className="text-center mb-12">
           <div className="badge-primary inline-flex mb-4">
-            <Sparkles size={12} /> Powered by GPT-4 Vision
+            <Sparkles size={12} /> Local RAG Style Matching
           </div>
           <h1 className="section-title mb-4">
             AI Outfit → <span className="text-primary">Perfect Shoes</span>
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            Upload any full-body photo or outfit selfie. Our AI analyzes your style, colors, and occasion — then recommends shoes from our collection with match scores.
+            Colors are analyzed on your device. Choose the look and occasion to retrieve matching shoes from our catalog — no paid AI API or image upload service is used.
           </p>
         </div>
 
@@ -102,7 +199,7 @@ export default function AIStylePage() {
                     <X size={14} />
                   </button>
                   <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-dark to-transparent p-6">
-                    <p className="text-sm text-gray-300 text-center">Looking great! Ready to find your perfect shoes? 👟</p>
+                    <p className="text-sm text-gray-300 text-center">Image stays in your browser. We analyze its color palette locally. 👟</p>
                   </div>
                 </div>
               ) : (
@@ -120,6 +217,27 @@ export default function AIStylePage() {
                 </div>
               )}
             </motion.div>
+
+            {uploadPreview && (
+              <div className="mt-5 grid sm:grid-cols-3 gap-3">
+                {[
+                  { label: 'Style', value: style, setValue: setStyle, options: ['casual', 'formal', 'streetwear', 'sporty', 'party', 'athleisure', 'business', 'minimalist', 'outdoor'] },
+                  { label: 'Occasion', value: occasion, setValue: setOccasion, options: ['casual', 'formal', 'gym', 'party', 'outdoor', 'office', 'sports', 'beach', 'travel'] },
+                  { label: 'Fit preference', value: gender, setValue: setGender, options: ['unisex', 'men', 'women', 'kids'] },
+                ].map(({ label, value, setValue, options }) => (
+                  <label key={label} className="text-xs text-gray-400">
+                    {label}
+                    <select
+                      value={value}
+                      onChange={(event) => setValue(event.target.value)}
+                      className="mt-1 w-full rounded-xl border border-white/10 bg-dark-200 px-3 py-2.5 text-sm text-white capitalize"
+                    >
+                      {options.map((option) => <option key={option} value={option}>{option}</option>)}
+                    </select>
+                  </label>
+                ))}
+              </div>
+            )}
 
             {/* Analyze button */}
             {uploadPreview && (
@@ -143,7 +261,7 @@ export default function AIStylePage() {
                 </button>
                 {isAnalyzing && (
                   <div className="mt-4 space-y-2">
-                    {['Detecting outfit colors...', 'Analyzing style & occasion...', 'Matching with our inventory...'].map((step, i) => (
+                    {['Reading the photo color palette locally...', 'Preparing your style and occasion search...', 'Retrieving and ranking every in-stock catalog match...'].map((step, i) => (
                       <motion.div key={step} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 1.2 }}
                         className="flex items-center gap-2 text-sm text-gray-400">
                         <Loader2 size={12} className="animate-spin text-primary" />
@@ -152,15 +270,16 @@ export default function AIStylePage() {
                     ))}
                   </div>
                 )}
+                {error && <p role="alert" className="mt-3 text-sm text-red-400">{error}</p>}
               </motion.div>
             )}
 
             {/* How it works */}
             <div className="mt-12 grid grid-cols-3 gap-4">
               {[
-                { step: '1', icon: '📸', title: 'Upload Photo', desc: 'Any outfit picture' },
-                { step: '2', icon: '🤖', title: 'AI Analyzes', desc: 'Style, color & occasion' },
-                { step: '3', icon: '👟', title: 'Get Matches', desc: 'Ranked recommendations' },
+                { step: '1', icon: '📸', title: 'Choose Photo', desc: 'Analyzed in your browser' },
+                { step: '2', icon: '🎨', title: 'Set Your Look', desc: 'Style, occasion & fit' },
+                { step: '3', icon: '👟', title: 'Get Every Match', desc: 'Catalog retrieval + ranking' },
               ].map(({ step, icon, title, desc }) => (
                 <div key={step} className="text-center p-4 rounded-2xl bg-dark-200 border border-white/5">
                   <div className="text-2xl mb-2">{icon}</div>
@@ -203,7 +322,7 @@ export default function AIStylePage() {
                         <p className="text-sm mt-1 capitalize">{analysis.occasion}</p>
                       </div>
                       <div>
-                        <span className="text-xs text-gray-500 uppercase tracking-wide">Color Palette</span>
+                        <span className="text-xs text-gray-500 uppercase tracking-wide">Detected outfit colors</span>
                         <div className="flex flex-wrap gap-1.5 mt-1">
                           {analysis.colorPalette?.slice(0, 5).map((color) => (
                             <span key={color} className="text-xs px-2 py-1 bg-dark-300 rounded-full capitalize">{color}</span>
@@ -212,7 +331,7 @@ export default function AIStylePage() {
                       </div>
                       {analysis.description && (
                         <div>
-                          <span className="text-xs text-gray-500 uppercase tracking-wide">AI Insight</span>
+                          <span className="text-xs text-gray-500 uppercase tracking-wide">Local analysis</span>
                           <p className="text-xs text-gray-400 mt-1 leading-relaxed">{analysis.description}</p>
                         </div>
                       )}
@@ -229,7 +348,7 @@ export default function AIStylePage() {
               <div className="lg:col-span-2 space-y-5">
                 <div className="flex items-center justify-between">
                   <h2 className="font-display font-bold text-2xl">
-                    {recommendations.length} Matches Found
+                    {recommendations.length} In-Stock Matches Found
                   </h2>
                   {/* Tier filter */}
                   <div className="flex gap-1 p-1 bg-dark-200 rounded-xl">
@@ -251,6 +370,41 @@ export default function AIStylePage() {
                     <div className="text-center py-12 text-gray-500">No {activeTab} recommendations found</div>
                   )}
                 </div>
+
+                {currentAnalysis?.recommendationId && (
+                  <div className="rounded-2xl border border-white/10 bg-dark-200 p-5">
+                    <p className="font-medium">Was this set of suggestions useful?</p>
+                    <p className="mt-1 text-xs text-gray-500">
+                      Your feedback adjusts future local rankings; it does not train an external model.
+                    </p>
+                    {isAuthenticated ? (
+                      feedbackSubmitted ? (
+                        <p className="mt-3 text-sm text-green-400">Thanks. Your preference has been recorded.</p>
+                      ) : (
+                        <div className="mt-3 flex gap-2">
+                          <button
+                            onClick={() => handleFeedback(true)}
+                            disabled={isSubmittingFeedback}
+                            className="btn-outline flex items-center gap-2 text-sm disabled:opacity-50"
+                          >
+                            <ThumbsUp size={14} /> Helpful
+                          </button>
+                          <button
+                            onClick={() => handleFeedback(false)}
+                            disabled={isSubmittingFeedback}
+                            className="btn-outline flex items-center gap-2 text-sm disabled:opacity-50"
+                          >
+                            <ThumbsDown size={14} /> Not for me
+                          </button>
+                        </div>
+                      )
+                    ) : (
+                      <Link to="/login" className="mt-3 inline-block text-sm text-primary hover:underline">
+                        Sign in to improve future recommendations
+                      </Link>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>
@@ -312,6 +466,21 @@ function AIRecommendationCard({ rec, rank }) {
                 ✓ {reason}
               </span>
             ))}
+          </div>
+        )}
+
+        {rec.review && (
+          <div className="mt-3 rounded-xl border border-white/5 bg-dark-200/70 p-3">
+            <p className="text-xs font-semibold text-gray-300">Straight style review</p>
+            <p className="mt-1 text-xs leading-relaxed text-gray-400">{rec.review}</p>
+            {rec.retrievalEvidence?.length > 0 && (
+              <details className="mt-2 text-xs text-gray-500">
+                <summary className="cursor-pointer hover:text-gray-300">Catalog evidence used</summary>
+                <ul className="mt-1 list-disc space-y-1 pl-4">
+                  {rec.retrievalEvidence.map((evidence) => <li key={evidence}>{evidence}</li>)}
+                </ul>
+              </details>
+            )}
           </div>
         )}
 

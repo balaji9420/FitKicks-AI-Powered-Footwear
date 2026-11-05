@@ -1,0 +1,1749 @@
+[
+  {
+    "id": "SH001",
+    "brand": "Nike",
+    "name": "Air Force 1 '07",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 9495,
+    "currency": "INR",
+    "original_model_year": 1982,
+    "colorways": [
+      "Triple White",
+      "Black/White",
+      "Light Smoke Grey"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Leather, Air-Sole unit",
+    "tags": [
+      "streetwear",
+      "classic",
+      "bestseller"
+    ],
+    "description": "Iconic court-turned-street silhouette with clean leather upper and Air cushioning.",
+    "image_url": "images/SH001-nike-air-force-1-07/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.nike.com/in",
+    "images": [
+      "images/SH001-nike-air-force-1-07/1-side.jpg",
+      "images/SH001-nike-air-force-1-07/2-front.jpg",
+      "images/SH001-nike-air-force-1-07/3-back.jpg",
+      "images/SH001-nike-air-force-1-07/4-top.jpg",
+      "images/SH001-nike-air-force-1-07/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH002",
+    "brand": "Nike",
+    "name": "Dunk Low Retro",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 10295,
+    "currency": "INR",
+    "original_model_year": 1985,
+    "colorways": [
+      "Panda (White/Black)",
+      "Grey Fog",
+      "University Red"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Leather",
+    "tags": [
+      "streetwear",
+      "hyped",
+      "skate"
+    ],
+    "description": "Retro basketball shoe that became a Gen Z staple in colour-block pairings.",
+    "image_url": "images/SH002-nike-dunk-low-retro/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.nike.com/in",
+    "images": [
+      "images/SH002-nike-dunk-low-retro/1-side.jpg",
+      "images/SH002-nike-dunk-low-retro/2-front.jpg",
+      "images/SH002-nike-dunk-low-retro/3-back.jpg",
+      "images/SH002-nike-dunk-low-retro/4-top.jpg",
+      "images/SH002-nike-dunk-low-retro/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH003",
+    "brand": "Nike",
+    "name": "Air Max 90",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 13995,
+    "currency": "INR",
+    "original_model_year": 1990,
+    "colorways": [
+      "White/Wolf Grey",
+      "Infrared",
+      "Black/Anthracite"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Leather/Mesh, Max Air",
+    "tags": [
+      "retro",
+      "runner",
+      "streetwear"
+    ],
+    "description": "Classic Air Max with visible heel Air unit and waffle outsole.",
+    "image_url": "images/SH003-nike-air-max-90/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.nike.com/in",
+    "images": [
+      "images/SH003-nike-air-max-90/1-side.jpg",
+      "images/SH003-nike-air-max-90/2-front.jpg",
+      "images/SH003-nike-air-max-90/3-back.jpg",
+      "images/SH003-nike-air-max-90/4-top.jpg",
+      "images/SH003-nike-air-max-90/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH004",
+    "brand": "Nike",
+    "name": "Air Max 97",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 17995,
+    "currency": "INR",
+    "original_model_year": 1997,
+    "colorways": [
+      "Silver Bullet",
+      "Black/Gold",
+      "Triple White"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Synthetic/Mesh, full-length Air",
+    "tags": [
+      "futuristic",
+      "retro",
+      "premium"
+    ],
+    "description": "Full-length visible Air with ripple-line design inspired by Japanese bullet trains.",
+    "image_url": "images/SH004-nike-air-max-97/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.nike.com/in",
+    "images": [
+      "images/SH004-nike-air-max-97/1-side.jpg",
+      "images/SH004-nike-air-max-97/2-front.jpg",
+      "images/SH004-nike-air-max-97/3-back.jpg",
+      "images/SH004-nike-air-max-97/4-top.jpg",
+      "images/SH004-nike-air-max-97/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH005",
+    "brand": "Nike",
+    "name": "Air Max 1",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 12995,
+    "currency": "INR",
+    "original_model_year": 1987,
+    "colorways": [
+      "Sport Red",
+      "Patta Style White",
+      "Obsidian"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Leather/Mesh",
+    "tags": [
+      "retro",
+      "runner",
+      "classic"
+    ],
+    "description": "The original visible-Air sneaker.",
+    "image_url": "images/SH005-nike-air-max-1/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.nike.com/in",
+    "images": [
+      "images/SH005-nike-air-max-1/1-side.jpg",
+      "images/SH005-nike-air-max-1/2-front.jpg",
+      "images/SH005-nike-air-max-1/3-back.jpg",
+      "images/SH005-nike-air-max-1/4-top.jpg",
+      "images/SH005-nike-air-max-1/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH006",
+    "brand": "Nike",
+    "name": "Zoom Vomero 5",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 14995,
+    "currency": "INR",
+    "original_model_year": 2011,
+    "colorways": [
+      "Platinum Tint",
+      "Black/Anthracite",
+      "Photon Dust"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Mesh/Synthetic, Zoom Air",
+    "tags": [
+      "y2k",
+      "chunky",
+      "trending"
+    ],
+    "description": "Y2K-era running shoe now a top Gen Z pick for its chunky layered look.",
+    "image_url": "images/SH006-nike-zoom-vomero-5/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.nike.com/in",
+    "images": [
+      "images/SH006-nike-zoom-vomero-5/1-side.jpg",
+      "images/SH006-nike-zoom-vomero-5/2-front.jpg",
+      "images/SH006-nike-zoom-vomero-5/3-back.jpg",
+      "images/SH006-nike-zoom-vomero-5/4-top.jpg",
+      "images/SH006-nike-zoom-vomero-5/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH007",
+    "brand": "Nike",
+    "name": "Air Max Plus (TN)",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 15995,
+    "currency": "INR",
+    "original_model_year": 1998,
+    "colorways": [
+      "Black/Volt",
+      "Triple Black",
+      "Hyper Blue"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Synthetic/Mesh, Tuned Air",
+    "tags": [
+      "streetwear",
+      "bold",
+      "premium"
+    ],
+    "description": "Wavy cage design and gradient fades; a street culture favourite.",
+    "image_url": "images/SH007-nike-air-max-plus-tn/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.nike.com/in",
+    "images": [
+      "images/SH007-nike-air-max-plus-tn/1-side.jpg",
+      "images/SH007-nike-air-max-plus-tn/2-front.jpg",
+      "images/SH007-nike-air-max-plus-tn/3-back.jpg",
+      "images/SH007-nike-air-max-plus-tn/4-top.jpg",
+      "images/SH007-nike-air-max-plus-tn/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH008",
+    "brand": "Jordan",
+    "name": "Air Jordan 1 High OG",
+    "category": "Basketball/Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 16995,
+    "currency": "INR",
+    "original_model_year": 1985,
+    "colorways": [
+      "Chicago",
+      "Bred",
+      "University Blue"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Premium leather",
+    "tags": [
+      "hyped",
+      "collector",
+      "premium"
+    ],
+    "description": "The original Michael Jordan signature shoe and a collector's grail.",
+    "image_url": "images/SH008-jordan-air-jordan-1-high-og/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.nike.com/in/jordan",
+    "images": [
+      "images/SH008-jordan-air-jordan-1-high-og/1-side.jpg",
+      "images/SH008-jordan-air-jordan-1-high-og/2-front.jpg",
+      "images/SH008-jordan-air-jordan-1-high-og/3-back.jpg",
+      "images/SH008-jordan-air-jordan-1-high-og/4-top.jpg",
+      "images/SH008-jordan-air-jordan-1-high-og/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH009",
+    "brand": "Jordan",
+    "name": "Air Jordan 1 Low",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 9995,
+    "currency": "INR",
+    "original_model_year": 1985,
+    "colorways": [
+      "Black Toe",
+      "Travis-style Mocha",
+      "Triple White"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Leather",
+    "tags": [
+      "streetwear",
+      "everyday"
+    ],
+    "description": "Lower-cut version of the AJ1 that is easy to style daily.",
+    "image_url": "images/SH009-jordan-air-jordan-1-low/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.nike.com/in/jordan",
+    "images": [
+      "images/SH009-jordan-air-jordan-1-low/1-side.jpg",
+      "images/SH009-jordan-air-jordan-1-low/2-front.jpg",
+      "images/SH009-jordan-air-jordan-1-low/3-back.jpg",
+      "images/SH009-jordan-air-jordan-1-low/4-top.jpg",
+      "images/SH009-jordan-air-jordan-1-low/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH010",
+    "brand": "Jordan",
+    "name": "Air Jordan 4 Retro",
+    "category": "Basketball/Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 20995,
+    "currency": "INR",
+    "original_model_year": 1989,
+    "colorways": [
+      "Military Black",
+      "White Cement",
+      "Bred"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Leather/Nubuck, mesh netting",
+    "tags": [
+      "hyped",
+      "collector",
+      "premium"
+    ],
+    "description": "1989 classic with mesh panels and flight plastic wings.",
+    "image_url": "images/SH010-jordan-air-jordan-4-retro/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.nike.com/in/jordan",
+    "images": [
+      "images/SH010-jordan-air-jordan-4-retro/1-side.jpg",
+      "images/SH010-jordan-air-jordan-4-retro/2-front.jpg",
+      "images/SH010-jordan-air-jordan-4-retro/3-back.jpg",
+      "images/SH010-jordan-air-jordan-4-retro/4-top.jpg",
+      "images/SH010-jordan-air-jordan-4-retro/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH011",
+    "brand": "Jordan",
+    "name": "Air Jordan 3 Retro",
+    "category": "Basketball/Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 19995,
+    "currency": "INR",
+    "original_model_year": 1988,
+    "colorways": [
+      "White Cement",
+      "Black Cement",
+      "Fire Red"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Leather with elephant print",
+    "tags": [
+      "collector",
+      "premium",
+      "retro"
+    ],
+    "description": "Debut of visible Air on Jordans and the elephant-print overlay.",
+    "image_url": "images/SH011-jordan-air-jordan-3-retro/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.nike.com/in/jordan",
+    "images": [
+      "images/SH011-jordan-air-jordan-3-retro/1-side.jpg",
+      "images/SH011-jordan-air-jordan-3-retro/2-front.jpg",
+      "images/SH011-jordan-air-jordan-3-retro/3-back.jpg",
+      "images/SH011-jordan-air-jordan-3-retro/4-top.jpg",
+      "images/SH011-jordan-air-jordan-3-retro/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH012",
+    "brand": "Adidas",
+    "name": "Samba OG",
+    "category": "Lifestyle/Terrace",
+    "gender": "Unisex",
+    "price_inr_approx": 10999,
+    "currency": "INR",
+    "original_model_year": 1949,
+    "colorways": [
+      "White/Black/Gum",
+      "Black/White",
+      "Cream White"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Leather, suede toe overlay",
+    "tags": [
+      "terrace",
+      "trending",
+      "bestseller"
+    ],
+    "description": "Indoor football origin; one of the biggest sneakers of the 2020s.",
+    "image_url": "images/SH012-adidas-samba-og/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.adidas.co.in",
+    "images": [
+      "images/SH012-adidas-samba-og/1-side.jpg",
+      "images/SH012-adidas-samba-og/2-front.jpg",
+      "images/SH012-adidas-samba-og/3-back.jpg",
+      "images/SH012-adidas-samba-og/4-top.jpg",
+      "images/SH012-adidas-samba-og/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH013",
+    "brand": "Adidas",
+    "name": "Gazelle",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 9999,
+    "currency": "INR",
+    "original_model_year": 1966,
+    "colorways": [
+      "Bold Blue",
+      "Core Black",
+      "Collegiate Green"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Suede",
+    "tags": [
+      "retro",
+      "trending",
+      "everyday"
+    ],
+    "description": "Slim suede classic available in vivid colours.",
+    "image_url": "images/SH013-adidas-gazelle/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.adidas.co.in",
+    "images": [
+      "images/SH013-adidas-gazelle/1-side.jpg",
+      "images/SH013-adidas-gazelle/2-front.jpg",
+      "images/SH013-adidas-gazelle/3-back.jpg",
+      "images/SH013-adidas-gazelle/4-top.jpg",
+      "images/SH013-adidas-gazelle/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH014",
+    "brand": "Adidas",
+    "name": "Campus 00s",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 9999,
+    "currency": "INR",
+    "original_model_year": 1970,
+    "colorways": [
+      "Core Black",
+      "Grey",
+      "Pink"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Suede",
+    "tags": [
+      "retro",
+      "chunky-sole",
+      "trending"
+    ],
+    "description": "Revival of the 2000s skate-inspired Campus with a thicker sole.",
+    "image_url": "images/SH014-adidas-campus-00s/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.adidas.co.in",
+    "images": [
+      "images/SH014-adidas-campus-00s/1-side.jpg",
+      "images/SH014-adidas-campus-00s/2-front.jpg",
+      "images/SH014-adidas-campus-00s/3-back.jpg",
+      "images/SH014-adidas-campus-00s/4-top.jpg",
+      "images/SH014-adidas-campus-00s/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH015",
+    "brand": "Adidas",
+    "name": "Superstar",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 9999,
+    "currency": "INR",
+    "original_model_year": 1969,
+    "colorways": [
+      "White/Black",
+      "Triple White",
+      "Core Black"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Leather, rubber shell toe",
+    "tags": [
+      "classic",
+      "streetwear",
+      "hip-hop"
+    ],
+    "description": "Shell-toe icon since 1969.",
+    "image_url": "images/SH015-adidas-superstar/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.adidas.co.in",
+    "images": [
+      "images/SH015-adidas-superstar/1-side.jpg",
+      "images/SH015-adidas-superstar/2-front.jpg",
+      "images/SH015-adidas-superstar/3-back.jpg",
+      "images/SH015-adidas-superstar/4-top.jpg",
+      "images/SH015-adidas-superstar/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH016",
+    "brand": "Adidas",
+    "name": "Handball Spezial",
+    "category": "Lifestyle/Terrace",
+    "gender": "Unisex",
+    "price_inr_approx": 11999,
+    "currency": "INR",
+    "original_model_year": 1979,
+    "colorways": [
+      "Navy/Gum",
+      "Burgundy",
+      "Light Blue"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Suede",
+    "tags": [
+      "terrace",
+      "trending",
+      "retro"
+    ],
+    "description": "Slim indoor handball shoe with gum sole, big in terrace fashion.",
+    "image_url": "images/SH016-adidas-handball-spezial/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.adidas.co.in",
+    "images": [
+      "images/SH016-adidas-handball-spezial/1-side.jpg",
+      "images/SH016-adidas-handball-spezial/2-front.jpg",
+      "images/SH016-adidas-handball-spezial/3-back.jpg",
+      "images/SH016-adidas-handball-spezial/4-top.jpg",
+      "images/SH016-adidas-handball-spezial/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH017",
+    "brand": "Adidas",
+    "name": "Ultraboost 1.0",
+    "category": "Running",
+    "gender": "Men/Women",
+    "price_inr_approx": 17999,
+    "currency": "INR",
+    "original_model_year": 2015,
+    "colorways": [
+      "Core Black",
+      "Cloud White",
+      "Solar Red"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Primeknit, Boost midsole",
+    "tags": [
+      "running",
+      "comfort",
+      "premium"
+    ],
+    "description": "Boost foam cushioning with a sock-like Primeknit upper.",
+    "image_url": "images/SH017-adidas-ultraboost-1-0/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.adidas.co.in",
+    "images": [
+      "images/SH017-adidas-ultraboost-1-0/1-side.jpg",
+      "images/SH017-adidas-ultraboost-1-0/2-front.jpg",
+      "images/SH017-adidas-ultraboost-1-0/3-back.jpg",
+      "images/SH017-adidas-ultraboost-1-0/4-top.jpg",
+      "images/SH017-adidas-ultraboost-1-0/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH018",
+    "brand": "Adidas",
+    "name": "Adizero Adios Pro 3",
+    "category": "Running (Racing)",
+    "gender": "Unisex",
+    "price_inr_approx": 21999,
+    "currency": "INR",
+    "original_model_year": 2023,
+    "colorways": [
+      "Ivory/Solar Red",
+      "Aqua/Lucid Lemon"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Lightstrike Pro, carbon rods",
+    "tags": [
+      "performance",
+      "premium",
+      "racing"
+    ],
+    "description": "Elite carbon-rod racing shoe.",
+    "image_url": "images/SH018-adidas-adizero-adios-pro-3/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.adidas.co.in",
+    "images": [
+      "images/SH018-adidas-adizero-adios-pro-3/1-side.jpg",
+      "images/SH018-adidas-adizero-adios-pro-3/2-front.jpg",
+      "images/SH018-adidas-adizero-adios-pro-3/3-back.jpg",
+      "images/SH018-adidas-adizero-adios-pro-3/4-top.jpg",
+      "images/SH018-adidas-adizero-adios-pro-3/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH019",
+    "brand": "Puma",
+    "name": "Speedcat OG",
+    "category": "Lifestyle/Motorsport",
+    "gender": "Unisex",
+    "price_inr_approx": 10999,
+    "currency": "INR",
+    "original_model_year": 2002,
+    "colorways": [
+      "Black/White",
+      "Red/White",
+      "Navy"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Suede",
+    "tags": [
+      "motorsport",
+      "trending",
+      "y2k"
+    ],
+    "description": "Slim motorsport-inspired shoe revived by the ballet-sneaker trend.",
+    "image_url": "images/SH019-puma-speedcat-og/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://in.puma.com",
+    "images": [
+      "images/SH019-puma-speedcat-og/1-side.jpg",
+      "images/SH019-puma-speedcat-og/2-front.jpg",
+      "images/SH019-puma-speedcat-og/3-back.jpg",
+      "images/SH019-puma-speedcat-og/4-top.jpg",
+      "images/SH019-puma-speedcat-og/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH020",
+    "brand": "Puma",
+    "name": "Suede XL",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 8999,
+    "currency": "INR",
+    "original_model_year": 1968,
+    "colorways": [
+      "Black/White",
+      "Navy",
+      "Burgundy"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Suede",
+    "tags": [
+      "hip-hop",
+      "chunky",
+      "streetwear"
+    ],
+    "description": "Oversized-tongue take on the classic Suede.",
+    "image_url": "images/SH020-puma-suede-xl/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://in.puma.com",
+    "images": [
+      "images/SH020-puma-suede-xl/1-side.jpg",
+      "images/SH020-puma-suede-xl/2-front.jpg",
+      "images/SH020-puma-suede-xl/3-back.jpg",
+      "images/SH020-puma-suede-xl/4-top.jpg",
+      "images/SH020-puma-suede-xl/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH021",
+    "brand": "Puma",
+    "name": "Palermo",
+    "category": "Lifestyle/Terrace",
+    "gender": "Unisex",
+    "price_inr_approx": 8999,
+    "currency": "INR",
+    "original_model_year": 1980,
+    "colorways": [
+      "White/Green",
+      "Black",
+      "Cream"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Suede/Leather",
+    "tags": [
+      "terrace",
+      "retro",
+      "trending"
+    ],
+    "description": "Terrace-style shoe from the 1980s.",
+    "image_url": "images/SH021-puma-palermo/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://in.puma.com",
+    "images": [
+      "images/SH021-puma-palermo/1-side.jpg",
+      "images/SH021-puma-palermo/2-front.jpg",
+      "images/SH021-puma-palermo/3-back.jpg",
+      "images/SH021-puma-palermo/4-top.jpg",
+      "images/SH021-puma-palermo/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH022",
+    "brand": "Puma",
+    "name": "RS-X",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 11999,
+    "currency": "INR",
+    "original_model_year": 1986,
+    "colorways": [
+      "White/Black",
+      "Bold Colour Blocks"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Mesh/Synthetic, RS foam",
+    "tags": [
+      "chunky",
+      "y2k",
+      "streetwear"
+    ],
+    "description": "Running System reboot with bold, chunky layering.",
+    "image_url": "images/SH022-puma-rs-x/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://in.puma.com",
+    "images": [
+      "images/SH022-puma-rs-x/1-side.jpg",
+      "images/SH022-puma-rs-x/2-front.jpg",
+      "images/SH022-puma-rs-x/3-back.jpg",
+      "images/SH022-puma-rs-x/4-top.jpg",
+      "images/SH022-puma-rs-x/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH023",
+    "brand": "Puma",
+    "name": "Mostro",
+    "category": "Lifestyle",
+    "gender": "Women",
+    "price_inr_approx": 10999,
+    "currency": "INR",
+    "original_model_year": 2018,
+    "colorways": [
+      "White",
+      "Pastel Pink",
+      "Black"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Leather/Synthetic",
+    "tags": [
+      "y2k",
+      "chunky",
+      "platform"
+    ],
+    "description": "Chunky platform-sole sneaker.",
+    "image_url": "images/SH023-puma-mostro/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://in.puma.com",
+    "images": [
+      "images/SH023-puma-mostro/1-side.jpg",
+      "images/SH023-puma-mostro/2-front.jpg",
+      "images/SH023-puma-mostro/3-back.jpg",
+      "images/SH023-puma-mostro/4-top.jpg",
+      "images/SH023-puma-mostro/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH024",
+    "brand": "New Balance",
+    "name": "550",
+    "category": "Lifestyle/Basketball",
+    "gender": "Unisex",
+    "price_inr_approx": 12999,
+    "currency": "INR",
+    "original_model_year": 1989,
+    "colorways": [
+      "White/Green",
+      "White/Grey",
+      "White/Burgundy"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Leather",
+    "tags": [
+      "retro",
+      "trending",
+      "bestseller"
+    ],
+    "description": "80s basketball shoe revived in 2020.",
+    "image_url": "images/SH024-new-balance-550/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.newbalance.in",
+    "images": [
+      "images/SH024-new-balance-550/1-side.jpg",
+      "images/SH024-new-balance-550/2-front.jpg",
+      "images/SH024-new-balance-550/3-back.jpg",
+      "images/SH024-new-balance-550/4-top.jpg",
+      "images/SH024-new-balance-550/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH025",
+    "brand": "New Balance",
+    "name": "530",
+    "category": "Lifestyle/Running",
+    "gender": "Unisex",
+    "price_inr_approx": 9999,
+    "currency": "INR",
+    "original_model_year": 2008,
+    "colorways": [
+      "Silver/White",
+      "White/Natural Indigo"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Mesh/Synthetic, ABZORB",
+    "tags": [
+      "y2k",
+      "dad-shoe",
+      "trending"
+    ],
+    "description": "Y2K running silhouette with metallic accents.",
+    "image_url": "images/SH025-new-balance-530/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.newbalance.in",
+    "images": [
+      "images/SH025-new-balance-530/1-side.jpg",
+      "images/SH025-new-balance-530/2-front.jpg",
+      "images/SH025-new-balance-530/3-back.jpg",
+      "images/SH025-new-balance-530/4-top.jpg",
+      "images/SH025-new-balance-530/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH026",
+    "brand": "New Balance",
+    "name": "574",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 8999,
+    "currency": "INR",
+    "original_model_year": 1988,
+    "colorways": [
+      "Grey",
+      "Navy",
+      "Black"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Suede/Mesh, ENCAP",
+    "tags": [
+      "classic",
+      "everyday"
+    ],
+    "description": "Everyday retro runner.",
+    "image_url": "images/SH026-new-balance-574/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.newbalance.in",
+    "images": [
+      "images/SH026-new-balance-574/1-side.jpg",
+      "images/SH026-new-balance-574/2-front.jpg",
+      "images/SH026-new-balance-574/3-back.jpg",
+      "images/SH026-new-balance-574/4-top.jpg",
+      "images/SH026-new-balance-574/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH027",
+    "brand": "New Balance",
+    "name": "9060",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 15999,
+    "currency": "INR",
+    "original_model_year": 2022,
+    "colorways": [
+      "Sea Salt",
+      "Rain Cloud Grey",
+      "Black"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Suede/Mesh, ABZORB SBS",
+    "tags": [
+      "chunky",
+      "premium",
+      "trending"
+    ],
+    "description": "Futuristic chunky design blending 990v6, 1906 and 2002R cues.",
+    "image_url": "images/SH027-new-balance-9060/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.newbalance.in",
+    "images": [
+      "images/SH027-new-balance-9060/1-side.jpg",
+      "images/SH027-new-balance-9060/2-front.jpg",
+      "images/SH027-new-balance-9060/3-back.jpg",
+      "images/SH027-new-balance-9060/4-top.jpg",
+      "images/SH027-new-balance-9060/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH028",
+    "brand": "New Balance",
+    "name": "2002R",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 13999,
+    "currency": "INR",
+    "original_model_year": 2010,
+    "colorways": [
+      "Protection Pack Rain Cloud",
+      "Phantom",
+      "Sea Salt"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Suede/Mesh, N-ergy",
+    "tags": [
+      "premium",
+      "retro",
+      "collector"
+    ],
+    "description": "Retro runner known for Protection Pack colourways.",
+    "image_url": "images/SH028-new-balance-2002r/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.newbalance.in",
+    "images": [
+      "images/SH028-new-balance-2002r/1-side.jpg",
+      "images/SH028-new-balance-2002r/2-front.jpg",
+      "images/SH028-new-balance-2002r/3-back.jpg",
+      "images/SH028-new-balance-2002r/4-top.jpg",
+      "images/SH028-new-balance-2002r/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH029",
+    "brand": "New Balance",
+    "name": "990v6",
+    "category": "Lifestyle/Running",
+    "gender": "Unisex",
+    "price_inr_approx": 22999,
+    "currency": "INR",
+    "original_model_year": 1982,
+    "colorways": [
+      "Grey",
+      "Black",
+      "Sea Salt"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Pigskin suede/Mesh, FuelCell",
+    "tags": [
+      "made-in-USA-line",
+      "premium",
+      "dad-shoe"
+    ],
+    "description": "Flagship 990 line, a heritage premium model.",
+    "image_url": "images/SH029-new-balance-990v6/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.newbalance.in",
+    "images": [
+      "images/SH029-new-balance-990v6/1-side.jpg",
+      "images/SH029-new-balance-990v6/2-front.jpg",
+      "images/SH029-new-balance-990v6/3-back.jpg",
+      "images/SH029-new-balance-990v6/4-top.jpg",
+      "images/SH029-new-balance-990v6/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH030",
+    "brand": "Asics",
+    "name": "Gel-Kayano 14",
+    "category": "Lifestyle/Running",
+    "gender": "Unisex",
+    "price_inr_approx": 14999,
+    "currency": "INR",
+    "original_model_year": 2008,
+    "colorways": [
+      "Cream/Silver",
+      "Black/Silver",
+      "White/Midnight"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Mesh/Synthetic, GEL",
+    "tags": [
+      "y2k",
+      "trending",
+      "premium"
+    ],
+    "description": "Early-2000s stability runner now a fashion staple.",
+    "image_url": "images/SH030-asics-gel-kayano-14/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.asics.com/in",
+    "images": [
+      "images/SH030-asics-gel-kayano-14/1-side.jpg",
+      "images/SH030-asics-gel-kayano-14/2-front.jpg",
+      "images/SH030-asics-gel-kayano-14/3-back.jpg",
+      "images/SH030-asics-gel-kayano-14/4-top.jpg",
+      "images/SH030-asics-gel-kayano-14/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH031",
+    "brand": "Asics",
+    "name": "Gel-1130",
+    "category": "Lifestyle/Running",
+    "gender": "Unisex",
+    "price_inr_approx": 10999,
+    "currency": "INR",
+    "original_model_year": 2008,
+    "colorways": [
+      "White/Clay Grey",
+      "Silver/Pure Silver"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Mesh/Synthetic",
+    "tags": [
+      "y2k",
+      "trending",
+      "dad-shoe"
+    ],
+    "description": "Retro Asics runner with metallic details.",
+    "image_url": "images/SH031-asics-gel-1130/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.asics.com/in",
+    "images": [
+      "images/SH031-asics-gel-1130/1-side.jpg",
+      "images/SH031-asics-gel-1130/2-front.jpg",
+      "images/SH031-asics-gel-1130/3-back.jpg",
+      "images/SH031-asics-gel-1130/4-top.jpg",
+      "images/SH031-asics-gel-1130/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH032",
+    "brand": "Asics",
+    "name": "Gel-Lyte III OG",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 11999,
+    "currency": "INR",
+    "original_model_year": 1990,
+    "colorways": [
+      "Cream/Grey",
+      "Black/Mint"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Suede/Mesh",
+    "tags": [
+      "retro",
+      "collector"
+    ],
+    "description": "Split-tongue 1990 design.",
+    "image_url": "images/SH032-asics-gel-lyte-iii-og/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.asics.com/in",
+    "images": [
+      "images/SH032-asics-gel-lyte-iii-og/1-side.jpg",
+      "images/SH032-asics-gel-lyte-iii-og/2-front.jpg",
+      "images/SH032-asics-gel-lyte-iii-og/3-back.jpg",
+      "images/SH032-asics-gel-lyte-iii-og/4-top.jpg",
+      "images/SH032-asics-gel-lyte-iii-og/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH033",
+    "brand": "Reebok",
+    "name": "Club C 85",
+    "category": "Lifestyle/Tennis",
+    "gender": "Unisex",
+    "price_inr_approx": 8999,
+    "currency": "INR",
+    "original_model_year": 1985,
+    "colorways": [
+      "Chalk/Green",
+      "Triple White",
+      "Vintage White"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Leather",
+    "tags": [
+      "classic",
+      "minimal",
+      "everyday"
+    ],
+    "description": "Clean 1985 tennis shoe.",
+    "image_url": "images/SH033-reebok-club-c-85/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.reebok.in",
+    "images": [
+      "images/SH033-reebok-club-c-85/1-side.jpg",
+      "images/SH033-reebok-club-c-85/2-front.jpg",
+      "images/SH033-reebok-club-c-85/3-back.jpg",
+      "images/SH033-reebok-club-c-85/4-top.jpg",
+      "images/SH033-reebok-club-c-85/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH034",
+    "brand": "Reebok",
+    "name": "Classic Leather",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 8499,
+    "currency": "INR",
+    "original_model_year": 1983,
+    "colorways": [
+      "White/Gum",
+      "Black",
+      "Cream"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Leather",
+    "tags": [
+      "classic",
+      "retro"
+    ],
+    "description": "Retro runner with soft garment leather.",
+    "image_url": "images/SH034-reebok-classic-leather/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.reebok.in",
+    "images": [
+      "images/SH034-reebok-classic-leather/1-side.jpg",
+      "images/SH034-reebok-classic-leather/2-front.jpg",
+      "images/SH034-reebok-classic-leather/3-back.jpg",
+      "images/SH034-reebok-classic-leather/4-top.jpg",
+      "images/SH034-reebok-classic-leather/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH035",
+    "brand": "Reebok",
+    "name": "Question Mid",
+    "category": "Basketball/Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 11999,
+    "currency": "INR",
+    "original_model_year": 1996,
+    "colorways": [
+      "Black/Red",
+      "White/Blue"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Leather",
+    "tags": [
+      "retro",
+      "collector",
+      "hyped"
+    ],
+    "description": "Allen Iverson's first signature shoe.",
+    "image_url": "images/SH035-reebok-question-mid/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.reebok.in",
+    "images": [
+      "images/SH035-reebok-question-mid/1-side.jpg",
+      "images/SH035-reebok-question-mid/2-front.jpg",
+      "images/SH035-reebok-question-mid/3-back.jpg",
+      "images/SH035-reebok-question-mid/4-top.jpg",
+      "images/SH035-reebok-question-mid/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH036",
+    "brand": "Converse",
+    "name": "Chuck 70 High Top",
+    "category": "Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 7499,
+    "currency": "INR",
+    "original_model_year": 1970,
+    "colorways": [
+      "Black",
+      "Parchment",
+      "Egret"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Canvas",
+    "tags": [
+      "classic",
+      "streetwear",
+      "everyday"
+    ],
+    "description": "Premium take on Chuck Taylor with heavier canvas and cushioning.",
+    "image_url": "images/SH036-converse-chuck-70-high-top/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.converse.com",
+    "images": [
+      "images/SH036-converse-chuck-70-high-top/1-side.jpg",
+      "images/SH036-converse-chuck-70-high-top/2-front.jpg",
+      "images/SH036-converse-chuck-70-high-top/3-back.jpg",
+      "images/SH036-converse-chuck-70-high-top/4-top.jpg",
+      "images/SH036-converse-chuck-70-high-top/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH037",
+    "brand": "Converse",
+    "name": "Run Star Hike",
+    "category": "Lifestyle",
+    "gender": "Women",
+    "price_inr_approx": 7999,
+    "currency": "INR",
+    "original_model_year": 2017,
+    "colorways": [
+      "Black/White",
+      "Egret"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Canvas, platform sole",
+    "tags": [
+      "platform",
+      "streetwear",
+      "trending"
+    ],
+    "description": "Platform Chuck with a chunky zig-zag sole.",
+    "image_url": "images/SH037-converse-run-star-hike/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.converse.com",
+    "images": [
+      "images/SH037-converse-run-star-hike/1-side.jpg",
+      "images/SH037-converse-run-star-hike/2-front.jpg",
+      "images/SH037-converse-run-star-hike/3-back.jpg",
+      "images/SH037-converse-run-star-hike/4-top.jpg",
+      "images/SH037-converse-run-star-hike/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH038",
+    "brand": "Vans",
+    "name": "Old Skool",
+    "category": "Skate/Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 5499,
+    "currency": "INR",
+    "original_model_year": 1977,
+    "colorways": [
+      "Black/White",
+      "Checkerboard",
+      "Navy"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Suede/Canvas",
+    "tags": [
+      "skate",
+      "classic",
+      "bestseller"
+    ],
+    "description": "Original skate shoe with the side-stripe.",
+    "image_url": "images/SH038-vans-old-skool/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.vans.in",
+    "images": [
+      "images/SH038-vans-old-skool/1-side.jpg",
+      "images/SH038-vans-old-skool/2-front.jpg",
+      "images/SH038-vans-old-skool/3-back.jpg",
+      "images/SH038-vans-old-skool/4-top.jpg",
+      "images/SH038-vans-old-skool/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH039",
+    "brand": "Vans",
+    "name": "Knu Skool",
+    "category": "Skate/Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 6999,
+    "currency": "INR",
+    "original_model_year": 1990,
+    "colorways": [
+      "Black/White",
+      "Navy"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Suede/Canvas",
+    "tags": [
+      "y2k",
+      "chunky",
+      "trending"
+    ],
+    "description": "Oversized 90s skate silhouette.",
+    "image_url": "images/SH039-vans-knu-skool/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.vans.in",
+    "images": [
+      "images/SH039-vans-knu-skool/1-side.jpg",
+      "images/SH039-vans-knu-skool/2-front.jpg",
+      "images/SH039-vans-knu-skool/3-back.jpg",
+      "images/SH039-vans-knu-skool/4-top.jpg",
+      "images/SH039-vans-knu-skool/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH040",
+    "brand": "Hoka",
+    "name": "Clifton 9",
+    "category": "Running",
+    "gender": "Unisex",
+    "price_inr_approx": 14999,
+    "currency": "INR",
+    "original_model_year": 2010,
+    "colorways": [
+      "Black/White",
+      "Vibrant Orange",
+      "Lunar Rock"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Engineered mesh, EVA foam",
+    "tags": [
+      "running",
+      "comfort",
+      "trending"
+    ],
+    "description": "Lightweight cushioned daily trainer.",
+    "image_url": "images/SH040-hoka-clifton-9/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.hoka.com",
+    "images": [
+      "images/SH040-hoka-clifton-9/1-side.jpg",
+      "images/SH040-hoka-clifton-9/2-front.jpg",
+      "images/SH040-hoka-clifton-9/3-back.jpg",
+      "images/SH040-hoka-clifton-9/4-top.jpg",
+      "images/SH040-hoka-clifton-9/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH041",
+    "brand": "Hoka",
+    "name": "Bondi 8",
+    "category": "Running",
+    "gender": "Unisex",
+    "price_inr_approx": 15999,
+    "currency": "INR",
+    "original_model_year": 2010,
+    "colorways": [
+      "Black",
+      "White",
+      "Cosmic Grey"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Mesh, EVA foam",
+    "tags": [
+      "comfort",
+      "max-cushion"
+    ],
+    "description": "Maximum-cushion trainer.",
+    "image_url": "images/SH041-hoka-bondi-8/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.hoka.com",
+    "images": [
+      "images/SH041-hoka-bondi-8/1-side.jpg",
+      "images/SH041-hoka-bondi-8/2-front.jpg",
+      "images/SH041-hoka-bondi-8/3-back.jpg",
+      "images/SH041-hoka-bondi-8/4-top.jpg",
+      "images/SH041-hoka-bondi-8/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH042",
+    "brand": "On",
+    "name": "Cloudmonster",
+    "category": "Running",
+    "gender": "Unisex",
+    "price_inr_approx": 16999,
+    "currency": "INR",
+    "original_model_year": 2021,
+    "colorways": [
+      "Frost/Cobalt",
+      "All Black",
+      "Ivory"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Engineered mesh, CloudTec",
+    "tags": [
+      "running",
+      "swiss",
+      "trending"
+    ],
+    "description": "Oversized Helion foam and Speedboard.",
+    "image_url": "images/SH042-on-cloudmonster/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.on.com",
+    "images": [
+      "images/SH042-on-cloudmonster/1-side.jpg",
+      "images/SH042-on-cloudmonster/2-front.jpg",
+      "images/SH042-on-cloudmonster/3-back.jpg",
+      "images/SH042-on-cloudmonster/4-top.jpg",
+      "images/SH042-on-cloudmonster/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH043",
+    "brand": "On",
+    "name": "Cloud 5",
+    "category": "Lifestyle/Running",
+    "gender": "Unisex",
+    "price_inr_approx": 12999,
+    "currency": "INR",
+    "original_model_year": 2020,
+    "colorways": [
+      "All White",
+      "Black",
+      "Undyed"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Mesh, CloudTec",
+    "tags": [
+      "everyday",
+      "minimal",
+      "commute"
+    ],
+    "description": "Lightweight everyday shoe.",
+    "image_url": "images/SH043-on-cloud-5/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.on.com",
+    "images": [
+      "images/SH043-on-cloud-5/1-side.jpg",
+      "images/SH043-on-cloud-5/2-front.jpg",
+      "images/SH043-on-cloud-5/3-back.jpg",
+      "images/SH043-on-cloud-5/4-top.jpg",
+      "images/SH043-on-cloud-5/5-sole.jpg"
+    ]
+  },
+  {
+    "id": "SH044",
+    "brand": "Salomon",
+    "name": "XT-6",
+    "category": "Trail/Lifestyle",
+    "gender": "Unisex",
+    "price_inr_approx": 21999,
+    "currency": "INR",
+    "original_model_year": 2013,
+    "colorways": [
+      "Black",
+      "Vanilla Ice",
+      "Silver Metallic"
+    ],
+    "sizes_uk": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10",
+      "UK 11"
+    ],
+    "material": "Mesh/Quicklace",
+    "tags": [
+      "gorpcore",
+      "trending",
+      "premium"
+    ],
+    "description": "Trail-runner turned streetwear status shoe.",
+    "image_url": "images/SH044-salomon-xt-6/1-side.jpg",
+    "stock": 0,
+    "official_url": "https://www.salomon.com",
+    "images": [
+      "images/SH044-salomon-xt-6/1-side.jpg",
+      "images/SH044-salomon-xt-6/2-front.jpg",
+      "images/SH044-salomon-xt-6/3-back.jpg",
+      "images/SH044-salomon-xt-6/4-top.jpg",
+      "images/SH044-salomon-xt-6/5-sole.jpg"
+    ]
+  }
+]

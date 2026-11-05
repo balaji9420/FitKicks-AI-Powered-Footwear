@@ -43,4 +43,5 @@ const wishlistSlice = createSlice({
 
 export const selectWishlistIds = (state) =>
   state.wishlist.products?.map(i => i.product?._id || i.product) || []
+export const selectWishlist = (state) => state.wishlist
 export default wishlistSlice.reducer

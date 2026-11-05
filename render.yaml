@@ -4,7 +4,7 @@ services:
     env: node
     region: singapore
     plan: free
-    buildCommand: cd backend && npm install
+    buildCommand: cd backend && npm ci
     startCommand: cd backend && npm start
     healthCheckPath: /health
     envVars:
@@ -14,26 +14,36 @@ services:
         sync: false
       - key: JWT_SECRET
         sync: false
+      - key: JWT_EXPIRES_IN
+        value: 7d
       - key: JWT_REFRESH_SECRET
         sync: false
+      - key: JWT_REFRESH_EXPIRES_IN
+        value: 30d
       - key: CLOUDINARY_CLOUD_NAME
         sync: false
       - key: CLOUDINARY_API_KEY
         sync: false
       - key: CLOUDINARY_API_SECRET
         sync: false
-      - key: OPENAI_API_KEY
-        sync: false
       - key: SMTP_HOST
         sync: false
+      - key: SMTP_PORT
+        value: "587"
       - key: SMTP_USER
         sync: false
       - key: SMTP_PASS
         sync: false
       - key: FROM_EMAIL
         sync: false
+      - key: FROM_NAME
+        value: FitKicks
       - key: CLIENT_URL
         sync: false
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "900000"
+      - key: RATE_LIMIT_MAX
+        value: "100"
       - key: RAZORPAY_KEY_ID
         sync: false
       - key: RAZORPAY_KEY_SECRET

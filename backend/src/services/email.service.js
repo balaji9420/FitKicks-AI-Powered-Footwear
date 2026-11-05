@@ -1,8 +1,9 @@
 const nodemailer = require("nodemailer");
 const { logger } = require("../utils/logger");
 
+const smtpPort = parseInt(process.env.SMTP_PORT) || 587;
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST, port: parseInt(process.env.SMTP_PORT) || 587, secure: false,
+  host: process.env.SMTP_HOST, port: smtpPort, secure: smtpPort === 465,
   auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
 });
 
@@ -46,7 +47,7 @@ const templates = {
       <h2>Order Update</h2>
       <p style="color:#ccc">Hi ${name}, order <strong>#${orderNumber}</strong> is now:</p>
       <div style="background:#FF6B35;border-radius:8px;padding:16px;text-align:center;margin:20px 0">
-        <span style="color:#fff;font-weight:bold;font-size:18px;text-transform:uppercase">${status.replace(/_/g," ")}</span>
+        <span style="color:#fff;font-weight:bold;font-size:18px;text-transform:uppercase">${status.replace(/_/g, " ")}</span>
       </div></div>`
   }),
   passwordChanged: ({ name }) => ({
@@ -72,6 +73,10 @@ const sendEmail = async ({ to, subject, template, data, html }) => {
     return info;
   } catch (err) {
     logger.error("Email error:", err.message);
+    if (process.env.NODE_ENV === "development" && template === "emailVerification") {
+      logger.warn(`Email unavailable. Verification OTP for ${to}: ${data?.otp}`);
+      return { preview: true };
+    }
     throw err;
   }
 };

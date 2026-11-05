@@ -4,6 +4,10 @@ const recItemSchema = new mongoose.Schema({
   product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
   matchScore: { type: Number, min: 0, max: 100, required: true },
   matchReasons: [String],
+  review: String,
+  retrievalScore: { type: Number, default: 0 },
+  retrievalEvidence: [String],
+  localFeedbackBoost: { type: Number, default: 0 },
   tier: { type: String, enum: ["premium","mid","budget"], required: true },
   rank: { type: Number, required: true },
 }, { _id: false });
@@ -11,7 +15,7 @@ const recItemSchema = new mongoose.Schema({
 const aiRecSchema = new mongoose.Schema({
   user:      { type: mongoose.Schema.Types.ObjectId, ref: "User", index: true },
   sessionId: { type: String, index: true },
-  outfitImage: { url: { type: String, required: true }, publicId: String },
+  outfitImage: { url: String, publicId: String },
   analysis: {
     dominantColors: [String], colorPalette: [String],
     style: String, occasion: String, fashionType: String,
@@ -26,8 +30,8 @@ const aiRecSchema = new mongoose.Schema({
   viewedProducts:    [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
   purchasedProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
   addedToCart:       [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
-  aiProvider: { type: String, default: "openai" },
-  aiModel:    { type: String, default: "gpt-4o" },
+  aiProvider: { type: String, default: "local" },
+  aiModel:    { type: String, default: "catalog-style-matcher" },
   processingTime: Number,
   status: { type: String, enum: ["pending","processing","completed","failed"], default: "pending" },
   errorMessage: String,
