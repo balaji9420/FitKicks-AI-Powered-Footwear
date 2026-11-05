@@ -100,6 +100,171 @@ const productDocument = (product) => [
   ...(product.colors || []).map((color) => color.name),
 ].filter(Boolean).join(" ")
 
+const SUPPORT_POLICIES = [
+  {
+    title: "Shipping",
+    content: "The FitKicks storefront advertises free shipping on orders above ₹999. Check the checkout page for the shipping options available to your order.",
+  },
+  {
+    title: "Returns",
+    content: "The FitKicks storefront advertises easy returns within 7 days. Check your order details or contact store support to confirm eligibility and return instructions.",
+  },
+  {
+    title: "Product authenticity",
+    content: "FitKicks states that products are verified. Review the product listing and order details for the specific item you are considering.",
+  },
+  {
+    title: "Sizes and availability",
+    content: "Product pages show the sizes available for each shoe. Size options and stock can change, so confirm the current availability on the product page before ordering.",
+  },
+  {
+    title: "Order status",
+    content: "Sign in to your FitKicks account and open My Orders to view your order history and available order-status details.",
+  },
+]
+
+const SUPPORT_QUERY_EXPANSIONS = {
+  shoe: ["shoes", "sneaker", "sneakers", "footwear"],
+  shoes: ["shoe", "sneaker", "sneakers", "footwear"],
+  delivery: ["shipping", "ship", "order"],
+  shipping: ["delivery", "ship", "order"],
+  return: ["returns", "refund", "exchange"],
+  returns: ["return", "refund", "exchange"],
+  size: ["sizes", "fit", "uk"],
+  sizes: ["size", "fit", "uk"],
+  cost: ["price", "prices", "budget"],
+  price: ["cost", "prices", "budget"],
+}
+
+const answerSupportQuestion = async (question) => {
+  const products = await Product.find({
+    isActive: true,
+    isInStock: true,
+    totalStock: { $gt: 0 },
+  })
+    .populate("brand", "name")
+    .populate("category", "name")
+    .select("name slug description shortDescription material brand category shoeType gender tags colors price averageRating totalReviews totalStock")
+    .lean()
+
+  const normalizedQuestion = normalize(question)
+  const requestedBrand = [...new Set(products.map((product) => product.brand?.name).filter(Boolean))]
+    .find((brand) => normalizedQuestion.includes(normalize(brand)))
+  const budgetMatch = question.match(
+    /(?:under|below|less than|up to|within)\s*(?:₹|rs\.?\s*)?([\d,]+(?:\.\d+)?)\s*(k)?/i
+  )
+  const maximumPrice = budgetMatch
+    ? Number(budgetMatch[1].replace(/,/g, "")) * (budgetMatch[2] ? 1000 : 1)
+    : null
+  const matchingProducts = products.filter((product) =>
+    (!requestedBrand || normalize(product.brand?.name) === normalize(requestedBrand)) &&
+    (maximumPrice === null || product.price <= maximumPrice)
+  )
+
+  const documents = [
+    ...SUPPORT_POLICIES.map((policy) => ({
+      type: "policy",
+      title: policy.title,
+      content: policy.content,
+    })),
+    ...matchingProducts.map((product) => ({
+      type: "product",
+      title: `${product.brand?.name || "FitKicks"} ${product.name}`,
+      content: [
+        productDocument(product),
+        `price ${product.price}`,
+        product.totalStock > 0 ? "in stock available" : "out of stock",
+        ...(product.colors || []).flatMap((color) => [
+          color.name,
+          ...(color.sizeStock || []).filter((entry) => entry.stock > 0).map((entry) => entry.size),
+        ]),
+      ].filter(Boolean).join(" "),
+      product,
+    })),
+  ]
+
+  const queryTerms = new Set(tokenize(question))
+  for (const term of [...queryTerms]) {
+    for (const expansion of SUPPORT_QUERY_EXPANSIONS[term] || []) {
+      tokenize(expansion).forEach((expandedTerm) => queryTerms.add(expandedTerm))
+    }
+  }
+  const terms = [...queryTerms]
+  const documentTokens = documents.map((document) => tokenize(`${document.title} ${document.content}`))
+  const documentFrequency = new Map()
+  documentTokens.forEach((tokens) => {
+    new Set(tokens).forEach((term) => documentFrequency.set(term, (documentFrequency.get(term) || 0) + 1))
+  })
+  const averageLength = documentTokens.reduce((sum, tokens) => sum + tokens.length, 0) /
+    Math.max(documentTokens.length, 1)
+
+  const ranked = documents.map((document, index) => {
+    const tokenCounts = new Map()
+    documentTokens[index].forEach((term) => tokenCounts.set(term, (tokenCounts.get(term) || 0) + 1))
+    const score = terms.reduce((total, term) => {
+      const frequency = tokenCounts.get(term) || 0
+      if (!frequency) return total
+      const count = documentFrequency.get(term) || 0
+      const inverseFrequency = Math.log(1 + (documents.length - count + 0.5) / (count + 0.5))
+      const normalizedFrequency = (frequency * 2.2) /
+        (frequency + 1.2 * (0.25 + 0.75 * documentTokens[index].length / Math.max(averageLength, 1)))
+      return total + inverseFrequency * normalizedFrequency
+    }, 0)
+    return {
+      ...document,
+      score,
+      matchedTerms: terms.filter((term) => tokenCounts.has(term)).slice(0, 5),
+    }
+  }).filter((document) => document.score > 0)
+    .sort((left, right) => right.score - left.score)
+
+  if (!ranked.length) {
+    return {
+      answer: "I couldn't find a reliable answer in the FitKicks catalog or store information. Try asking about a shoe, its price, sizes, stock, shipping, returns, or your orders.",
+      sources: [],
+      products: [],
+    }
+  }
+
+  const policyMatches = ranked.filter((document) => document.type === "policy").slice(0, 2)
+  const productMatches = ranked.filter((document) => document.type === "product").slice(0, 3)
+  const bestPolicy = policyMatches[0]
+  const bestProduct = productMatches[0]
+  const usePolicy = bestPolicy && (!bestProduct || bestPolicy.score >= bestProduct.score)
+  const sources = usePolicy
+    ? policyMatches.map(({ title, content, matchedTerms }) => ({
+      type: "store",
+      title,
+      excerpt: content,
+      matchedTerms,
+    }))
+    : productMatches.map(({ title, content, matchedTerms, product }) => ({
+      type: "product",
+      title,
+      excerpt: (product.shortDescription || product.description || content).slice(0, 280),
+      matchedTerms,
+      slug: product.slug,
+    }))
+
+  const recommendations = usePolicy ? [] : productMatches.map(({ product }) => ({
+    id: product._id,
+    slug: product.slug,
+    name: product.name,
+    brand: product.brand?.name || "FitKicks",
+    price: product.price,
+    averageRating: product.averageRating || 0,
+    image: product.images?.find((image) => image.isPrimary)?.url || product.images?.[0]?.url || "",
+  }))
+
+  return {
+    answer: usePolicy
+      ? bestPolicy.content
+      : `Here are the closest in-stock catalog matches I found. Compare their listed details and availability before choosing.`,
+    sources,
+    products: recommendations,
+  }
+}
+
 const retrieveCatalogEvidence = (products, analysis, user) => {
   const query = [
     analysis.style,
@@ -163,8 +328,68 @@ const addLearnedSignal = (signals, product, value) => {
   tags.forEach((tag) => signals.tags.set(tag, (signals.tags.get(tag) || 0) + value))
 }
 
+const calculateCollaborativeScores = (userRecords, peerRecords) => {
+  const productId = (product) => String(product?._id || product || "")
+  const addInteractions = (profile, record) => {
+    for (const product of record.addedToCart || []) {
+      const id = productId(product)
+      if (id) profile.set(id, (profile.get(id) || 0) + 0.5)
+    }
+    for (const product of record.purchasedProducts || []) {
+      const id = productId(product)
+      if (id) profile.set(id, (profile.get(id) || 0) + 1)
+    }
+  }
+
+  const userProfile = new Map()
+  userRecords.forEach((record) => addInteractions(userProfile, record))
+  if (!userProfile.size) return new Map()
+
+  const peerProfiles = new Map()
+  peerRecords.forEach((record) => {
+    const userId = String(record.user || "")
+    if (!userId) return
+    if (!peerProfiles.has(userId)) peerProfiles.set(userId, new Map())
+    addInteractions(peerProfiles.get(userId), record)
+  })
+
+  const productScores = new Map()
+  const peerWeightTotals = new Map()
+  for (const profile of peerProfiles.values()) {
+    let dotProduct = 0
+    let userNorm = 0
+    let peerNorm = 0
+    for (const weight of userProfile.values()) userNorm += weight * weight
+    for (const weight of profile.values()) peerNorm += weight * weight
+    for (const [id, weight] of userProfile) {
+      dotProduct += weight * (profile.get(id) || 0)
+    }
+    const similarity = dotProduct / (Math.sqrt(userNorm) * Math.sqrt(peerNorm))
+    if (!similarity) continue
+
+    for (const [id, weight] of profile) {
+      if (userProfile.has(id)) continue
+      productScores.set(id, (productScores.get(id) || 0) + similarity * weight)
+      peerWeightTotals.set(id, (peerWeightTotals.get(id) || 0) + similarity)
+    }
+  }
+
+  const normalizedScores = new Map()
+  let maximumScore = 0
+  for (const [id, score] of productScores) {
+    const normalizedScore = score / peerWeightTotals.get(id)
+    normalizedScores.set(id, normalizedScore)
+    maximumScore = Math.max(maximumScore, normalizedScore)
+  }
+  if (!maximumScore) return new Map()
+  for (const [id, score] of normalizedScores) {
+    normalizedScores.set(id, score / maximumScore)
+  }
+  return normalizedScores
+}
+
 const learnFromFeedback = async (userId) => {
-  const signals = { brands: new Map(), tags: new Map() }
+  const signals = { brands: new Map(), tags: new Map(), collaborative: new Map() }
   if (!userId) return signals
 
   const history = await AIRecommendation.find({
@@ -192,6 +417,25 @@ const learnFromFeedback = async (userId) => {
     for (const product of record.purchasedProducts || []) addLearnedSignal(signals, product, 0.8)
     for (const product of record.addedToCart || []) addLearnedSignal(signals, product, 0.45)
   })
+
+  const currentInteractions = history.filter((record) =>
+    record.addedToCart?.length || record.purchasedProducts?.length
+  )
+  if (currentInteractions.length) {
+    const peerHistory = await AIRecommendation.find({
+      user: { $exists: true, $ne: userId },
+      updatedAt: { $gte: new Date(Date.now() - 365 * 24 * 60 * 60 * 1000) },
+      $or: [
+        { addedToCart: { $ne: [] } },
+        { purchasedProducts: { $ne: [] } },
+      ],
+    })
+      .select("user addedToCart purchasedProducts")
+      .sort({ updatedAt: -1 })
+      .limit(1000)
+      .lean()
+    signals.collaborative = calculateCollaborativeScores(currentInteractions, peerHistory)
+  }
 
   return signals
 }
@@ -267,6 +511,8 @@ const generateRecommendations = async ({ analysis, userId, sessionId, persist = 
       const learnedTagBoost = tags.reduce((boost, tag) => boost + (learnedSignals.tags.get(tag) || 0), 0)
       const learnedBrandBoost = learnedSignals.brands.get(brandName) || 0
       const feedbackBoost = Math.max(-12, Math.min(12, learnedTagBoost * 2 + learnedBrandBoost * 3))
+      const collaborativeScore = learnedSignals.collaborative.get(String(product._id)) || 0
+      const collaborativeBoost = collaborativeScore * 8
       const inPreferredPriceRange = !preferredPriceRange || (
         product.price >= (preferredPriceRange.min || 0) &&
         product.price <= (preferredPriceRange.max || Number.MAX_SAFE_INTEGER)
@@ -281,6 +527,7 @@ const generateRecommendations = async ({ analysis, userId, sessionId, persist = 
       if (preferenceMatch || brandMatch) reasons.push("Matches your saved preferences")
       if (evidence.matchedTerms.length) reasons.push(`Retrieved relevant catalog details: ${evidence.matchedTerms.slice(0, 3).join(", ")}`)
       if (feedbackBoost > 1) reasons.push("Ranked higher based on your past feedback and shopping choices")
+      if (collaborativeScore > 0) reasons.push("Popular with shoppers who have similar purchase history")
       if (!inPreferredPriceRange) reasons.push("Outside your saved price range")
 
       const rating = Math.min(5, Math.max(0, Number(product.averageRating) || 0))
@@ -297,6 +544,7 @@ const generateRecommendations = async ({ analysis, userId, sessionId, persist = 
         (rating ? (rating / 5) * 5 * ratingConfidence : 0) -
         (!inPreferredPriceRange ? 12 : 0) +
         feedbackBoost +
+        collaborativeBoost +
         Math.min(evidence.score * 2, 8)
       )))
 
@@ -308,6 +556,7 @@ const generateRecommendations = async ({ analysis, userId, sessionId, persist = 
         retrievalScore: evidence.score,
         retrievalEvidence: evidence.evidence,
         feedbackBoost,
+        collaborativeBoost,
       }
     })
     .sort((a, b) => b.score - a.score ||
@@ -316,7 +565,7 @@ const generateRecommendations = async ({ analysis, userId, sessionId, persist = 
       (Number(b.product.totalSold) || 0) - (Number(a.product.totalSold) || 0))
 
   const prices = rankedProducts.map(({ product }) => product.price).sort((a, b) => a - b)
-  const recommendations = rankedProducts.map(({ product, score, reasons, review, retrievalScore, retrievalEvidence, feedbackBoost }, index) => ({
+  const recommendations = rankedProducts.map(({ product, score, reasons, review, retrievalScore, retrievalEvidence, feedbackBoost, collaborativeBoost }, index) => ({
     product,
     matchScore: score,
     matchReasons: reasons,
@@ -324,6 +573,7 @@ const generateRecommendations = async ({ analysis, userId, sessionId, persist = 
     retrievalScore,
     retrievalEvidence,
     localFeedbackBoost: feedbackBoost,
+    collaborativeBoost,
     tier: getPriceTier(product.price, prices),
     rank: index + 1,
   }))
@@ -367,4 +617,6 @@ module.exports = {
   analyzeOutfit,
   generateRecommendations,
   generateFallbackRecommendations,
+  answerSupportQuestion,
+  calculateCollaborativeScores,
 }

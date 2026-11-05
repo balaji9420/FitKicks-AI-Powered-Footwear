@@ -2,8 +2,8 @@
 
 ## Prerequisites
 - Node.js 18+
-- MongoDB Atlas account (free)
-- Cloudinary account (free)
+- MongoDB (required for live catalog and account features)
+- Python 3.9+ for the Streamlit app
 
 ---
 
@@ -11,14 +11,10 @@
 
 ```bash
 # From the fitkicks/ root folder:
-npm install          # installs concurrently
-
-cd backend
-npm install
-
-cd ../frontend
-npm install
+npm run install:all
 ```
+
+For Streamlit, also run `python -m pip install -r requirements.txt`.
 
 ---
 
@@ -27,7 +23,7 @@ npm install
 ### Backend
 ```bash
 cd backend
-cp .env.example .env
+# Copy .env.example to .env, then edit .env
 # Edit .env and fill in your values (MongoDB, Cloudinary, email, etc.)
 ```
 
@@ -39,12 +35,10 @@ MONGODB_URI=mongodb+srv://<database-user>:<database-password>@<cluster-host>/fit
 
 Use the database user's credentials, not your Atlas website login. URL-encode special characters in the database password, then restart the backend. Never commit `.env` or paste its connection string into chat.
 
-### Frontend
-```bash
-cd frontend
-cp .env.example .env
-# The relative /api/v1 URL uses Vite's proxy to reach the port configured in backend/.env.
-```
+The React app uses `/api/v1` through the Vite development proxy. The proxy reads
+the API port from `backend/.env` (`PORT`, 5000 in the example). Set `VITE_API_URL`
+only when using a separately hosted API. Streamlit reads `FITKICKS_API_URL`
+from its environment or Streamlit Cloud Secrets; the value must end in `/api/v1`.
 
 ---
 
@@ -62,39 +56,57 @@ This imports 44 shoes and their image galleries. The supplied image files are pl
 
 After signing in as an admin, open **Inventory**, select the edit-stock button for a shoe, enter the actual quantities for each color and size, and save. Products become purchasable only for variants with stock above zero.
 
+Start the backend in one terminal after configuring MongoDB:
+
 ```bash
-# From fitkicks/ root:
+cd backend
 npm run dev
 ```
 
-This starts:
-- **Backend** on http://localhost:5000
-- **Frontend** on http://localhost:5173
+In another terminal, start the React frontend:
 
-Health check: http://localhost:5000/health
+```bash
+cd frontend
+npm run dev
+```
 
-If the website opens but API requests or login fail, check the backend terminal and
-open the health endpoint at the configured backend port. The backend must connect
-to MongoDB before it starts listening; replace the MongoDB placeholders in
-`backend/.env` with a valid Atlas URI. Keep `.env` files private and never paste
-their values into chat.
+Open the React website at http://localhost:5173. The backend listens on the
+`PORT` configured in `backend/.env`.
+
+Health check: http://localhost:5000/health (change the port if `PORT` differs).
+
+If live products or sign-in are unavailable, check the backend terminal and open
+the health endpoint at the configured backend port. The backend must connect to
+MongoDB before it starts listening.
+
+### Streamlit app
+
+From the project root, run `python -m streamlit run app.py`; the app opens at
+http://localhost:8501. It includes a session-only bag and saved list, local
+catalog ranking, source-grounded support, and API-backed account/admin pages.
+Checkout, payment, and the complete customer storefront remain in React. Login,
+email verification, live inventory, and admin data require a separately hosted
+Node API connected to a production database.
 
 ## AI Style Matching
 
-AI Style Match runs locally and does not require an OpenAI API key or Google ADK.
-The browser extracts a coarse color palette from the chosen image without
-uploading the image. Shoppers choose style, occasion, and fit preference; the
-backend retrieves relevant catalog details and ranks every in-stock shoe.
-Authenticated users can rate the suggestions; future rankings adapt to this
-feedback and to cart/purchase interactions. This is lightweight preference
-learning, not training a neural network. Style reviews are generated from catalog
-facts and are not represented as customer reviews.
+AI Style Match does not require an OpenAI API key. The React app extracts a
+coarse color palette in the browser and sends only that palette to the backend.
+The backend retrieves catalog evidence and ranks in-stock shoes using style,
+occasion, color, quality, and available shopper-feedback signals. The support
+chat retrieves catalog or published store information, shows its sources, and
+abstains when it cannot find relevant evidence. It does not send questions or
+outfit images to a paid AI service. The hybrid recommender combines catalog
+relevance with similar shoppers' cart and purchase patterns and the signed-in
+shopper's saved preferences and feedback. Authenticated feedback can adjust future
+rankings; this is lightweight preference learning, not neural-network training.
+Style reviews are based on catalog facts and are not customer reviews. Google
+ADK is not integrated in this local, no-paid-service configuration.
 
 ## Deploy without a terminal
 
-FitKicks is a React/Vite frontend with an Express API; it is not a Streamlit app.
-The deployment files in this repository target Vercel (frontend) and Render
-(backend). Deploying requires a GitHub repository connected to both services.
+The React website can be deployed to Vercel and the Node API to Render. Deploying
+requires a GitHub repository connected to those services.
 
 1. In GitHub, create or open the repository and use **Add file → Upload files**
    to upload the project files. Do not upload `.env` files, `node_modules`,
@@ -105,19 +117,27 @@ The deployment files in this repository target Vercel (frontend) and Render
    dashboard: `MONGODB_URI`, `JWT_SECRET`, `JWT_REFRESH_SECRET`,
    `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`,
    `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, `FROM_EMAIL`, and `CLIENT_URL`.
-   Generate two different strong JWT secrets. Set `CLIENT_URL` to the final
-   Vercel site origin (for example, `https://your-site.vercel.app`).
+   Generate two different strong JWT secrets. Set `CLIENT_URL` to the frontend
+   origin for password-reset links.
 3. Wait for the Render service to finish deploying. Its public API URL is shown
    in the Render dashboard; verify `<API-URL>/health` returns a healthy status.
-4. In Vercel, choose **Add New → Project**, import the same GitHub repository,
-   and set **Root Directory** to `frontend`. Keep the build command `npm run
-   build` and output directory `dist`.
-5. In the Vercel project settings, add the build environment variable
-   `VITE_API_URL` with the full Render API URL ending in `/api/v1`, for example
-   `https://your-api.onrender.com/api/v1`. Redeploy after saving the variable.
-6. Copy the final Vercel site origin into Render's `CLIENT_URL` setting, then
-   redeploy the API. This allows browser requests and password-reset links to
-   use the production website.
+4. In Vercel, import the repository, set the project root to `frontend`, and set
+   `VITE_API_URL` to the Render API URL ending in `/api/v1`, for example
+   `https://your-api.onrender.com/api/v1`. Set Render's `CLIENT_URL` to the
+   deployed Vercel origin.
+
+To deploy on Streamlit Community Cloud, select the GitHub branch containing
+`app.py` and set `app.py` as the app file. Cloud installs the root `requirements.txt`.
+In the deployed app's **Settings → Secrets**, set:
+
+```toml
+FITKICKS_API_URL = "https://your-api.onrender.com/api/v1"
+```
+
+Deploy the Render API and populate its MongoDB database before expecting account
+features or live products. Add production secrets in the hosting dashboards,
+never in source files or chat. The bundled catalog is only an offline fallback
+and does not include invented stock.
 
 The public site will not have products until its MongoDB database is populated.
 The current local demo inventory and local user accounts are not copied to
@@ -131,9 +151,9 @@ Razorpay credentials are only needed if enabling online payments.
 ## Step 4: Test the App
 
 1. Open http://localhost:5173
-2. Click **Register** to create an account
+2. Click **Sign up** to create an account
 3. Verify email with OTP (check terminal for email preview in dev mode)
-4. Browse products, try AI Style Match
+4. Browse products, try AI Style Match, and ask the support assistant a catalog question
 
 ---
 

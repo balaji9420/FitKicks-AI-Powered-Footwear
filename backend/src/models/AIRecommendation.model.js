@@ -8,6 +8,7 @@ const recItemSchema = new mongoose.Schema({
   retrievalScore: { type: Number, default: 0 },
   retrievalEvidence: [String],
   localFeedbackBoost: { type: Number, default: 0 },
+  collaborativeBoost: { type: Number, default: 0 },
   tier: { type: String, enum: ["premium","mid","budget"], required: true },
   rank: { type: Number, required: true },
 }, { _id: false });

@@ -1,4 +1,9 @@
-const { analyzeOutfit: analyzeOutfitLocally, generateRecommendations, generateFallbackRecommendations } = require("../services/ai.service");
+const {
+  analyzeOutfit: analyzeOutfitLocally,
+  generateRecommendations,
+  generateFallbackRecommendations,
+  answerSupportQuestion,
+} = require("../services/ai.service");
 const AIRecommendation = require("../models/AIRecommendation.model");
 const { AppError, asyncHandler } = require("../utils/helpers");
 const { v4: uuidv4 } = require("uuid");
@@ -12,6 +17,15 @@ exports.analyzeOutfit = asyncHandler(async (req, res) => {
     success: true, message: "Outfit analyzed locally. No paid AI API was used.",
     data: { recommendationId: rec._id, analysis: rec.analysis, recommendations: rec.recommendations, processingTime: rec.processingTime },
   });
+});
+
+exports.chatSupport = asyncHandler(async (req, res) => {
+  const question = typeof req.body.question === "string" ? req.body.question.trim() : "";
+  if (question.length < 3 || question.length > 500) {
+    throw new AppError("Question must be between 3 and 500 characters.", 400);
+  }
+  const result = await answerSupportQuestion(question);
+  res.json({ success: true, data: result });
 });
 
 exports.getRecommendation = asyncHandler(async (req, res) => {

@@ -3,6 +3,7 @@ const r = express.Router();
 const c = require("../controllers/ai.controller");
 const { protect, adminOnly, optionalAuth } = require("../middlewares/auth.middleware");
 r.post("/analyze", optionalAuth, c.analyzeOutfit);
+r.post("/chat", optionalAuth, c.chatSupport);
 r.get("/recommendations", c.getSmartRecommendations);
 r.get("/history", protect, c.getMyRecommendations);
 r.get("/analytics", protect, adminOnly, c.getAIAnalytics);
