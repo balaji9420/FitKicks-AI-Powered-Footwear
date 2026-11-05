@@ -8,7 +8,6 @@ const compression = require("compression");
 const cookieParser = require("cookie-parser");
 const mongoSanitize = require("express-mongo-sanitize");
 const rateLimit = require("express-rate-limit");
-const path = require("path");
 
 const { connectDB } = require("./config/database");
 const { logger } = require("./utils/logger");
@@ -31,7 +30,6 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cookieParser());
 app.use(compression());
-app.use("/catalog-images", express.static(path.resolve(__dirname, "../../shoes-data/shoes-data/images")));
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
 app.get("/health", (req, res) => res.json({ status: "healthy", service: "FitKicks API", version: "1.0.0", timestamp: new Date().toISOString() }));
@@ -74,7 +72,6 @@ const startServer = async () => {
 
   } catch (err) {
     console.error("SERVER ERROR:", err);
-    process.exitCode = 1;
   }
 };
 

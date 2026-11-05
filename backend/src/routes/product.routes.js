@@ -6,8 +6,6 @@ const { uploadProduct } = require("../config/cloudinary");
 r.get("/", c.getProducts);
 r.get("/featured", c.getFeaturedProducts);
 r.get("/search", c.searchProducts);
-r.get("/admin/inventory", protect, adminOnly, c.getInventory);
-r.patch("/admin/:id/inventory", protect, adminOnly, c.updateInventory);
 r.patch("/admin/bulk-update", protect, adminOnly, c.bulkUpdate);
 r.get("/:identifier", c.getProduct);
 r.post("/", protect, adminOnly, uploadProduct.array("images", 10), c.createProduct);

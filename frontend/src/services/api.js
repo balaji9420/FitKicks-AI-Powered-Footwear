@@ -1,11 +1,6 @@
 import axios from 'axios'
-const BASE_URL = import.meta.env.VITE_API_URL || '/api/v1'
-const API_ORIGIN = new URL(BASE_URL, window.location.origin).origin
 
-export const resolveAssetUrl = (url) => {
-  if (!url || /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(url)) return url
-  return new URL(url, `${API_ORIGIN}/`).href
-}
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1'
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -37,8 +32,7 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config
-    const isAuthFlowRequest = /\/auth\/(login|register|verify-email|resend-otp|refresh-token|forgot-password|reset-password)/.test(originalRequest?.url || '')
-    if (error.response?.status === 401 && !originalRequest._retry && !isAuthFlowRequest) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject })
@@ -60,9 +54,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         processQueue(refreshError, null)
         localStorage.removeItem('fk_token')
-        if (!['/login', '/register', '/verify-email', '/forgot-password'].includes(window.location.pathname)) {
-          window.location.href = '/login'
-        }
+        window.location.href = '/login'
         return Promise.reject(refreshError)
       } finally {
         isRefreshing = false

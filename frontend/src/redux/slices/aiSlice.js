@@ -2,10 +2,10 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import api from '../../services/api'
 import toast from 'react-hot-toast'
 
-export const analyzeOutfit = createAsyncThunk('ai/analyze', async (payload, { rejectWithValue }) => {
+export const analyzeOutfit = createAsyncThunk('ai/analyze', async (formData, { rejectWithValue }) => {
   try {
-    const res = await api.post('/ai/analyze', payload, {
-      headers: { 'Content-Type': 'application/json' },
+    const res = await api.post('/ai/analyze', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
     })
     return res.data.data
   } catch (err) {

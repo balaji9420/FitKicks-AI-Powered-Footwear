@@ -11,7 +11,7 @@ import { addToCompare, addRecentlyViewed } from '../../redux/slices/uiSlice'
 import { selectIsAuthenticated } from '../../redux/slices/authSlice'
 import ProductCard from '../../components/common/ProductCard'
 import toast from 'react-hot-toast'
-import api, { resolveAssetUrl } from '../../services/api'
+import api from '../../services/api'
 
 export default function ProductDetailPage() {
   const { identifier } = useParams()
@@ -97,7 +97,7 @@ export default function ProductDetailPage() {
   )
 
   const images = product.images || []
-  const primaryImage = resolveAssetUrl(images[activeImage]?.url || '/placeholder-shoe.jpg')
+  const primaryImage = images[activeImage]?.url || '/placeholder-shoe.jpg'
   const discount = product.comparePrice > product.price
     ? Math.round(((product.comparePrice - product.price) / product.comparePrice) * 100)
     : 0
@@ -159,7 +159,7 @@ export default function ProductDetailPage() {
                   <button key={i} onClick={() => setActiveImage(i)}
                     className={`w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all ${activeImage === i ? 'border-primary' : 'border-transparent opacity-60 hover:opacity-100'
                       }`}>
-                    <img src={resolveAssetUrl(img.url)} alt={img.alt || ''} className="w-full h-full object-cover" />
+                    <img src={img.url} alt="" className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>
@@ -206,9 +206,7 @@ export default function ProductDetailPage() {
 
             {/* Stock */}
             <div>
-              {product.isInStock
-                ? <span className="badge-success">✓ In Stock</span>
-                : <span className="badge-danger">Out of Stock</span>}
+              <span className="badge-success">✓ In Stock</span>
             </div>
 
             {/* Color Selection */}
@@ -283,9 +281,9 @@ export default function ProductDetailPage() {
 
             {/* CTA */}
             <div className="flex gap-3">
-              <button onClick={handleAddToCart} disabled={cartLoading || !product.isInStock}
+              <button onClick={handleAddToCart} disabled={cartLoading}
                 className="btn-primary flex-1 flex items-center justify-center gap-2 disabled:opacity-60">
-                <ShoppingBag size={16} /> {product.isInStock ? 'Add to Cart' : 'Out of Stock'}
+                <ShoppingBag size={16} /> Add to Cart
               </button>
               <button onClick={handleWishlist}
                 className={`w-12 h-12 rounded-xl border-2 flex items-center justify-center transition-all ${isWishlisted ? 'bg-red-500 border-red-500 text-white' : 'border-white/20 text-gray-400 hover:border-red-500/50 hover:text-red-400'

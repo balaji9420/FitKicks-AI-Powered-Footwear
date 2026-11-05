@@ -6,7 +6,6 @@ import { Search, X, ArrowRight, TrendingUp } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { selectUI, closeSearch } from '../../redux/slices/uiSlice'
 import { searchProducts } from '../../redux/slices/productSlice'
-import { resolveAssetUrl } from '../../services/api'
 
 const trendingSearches = ['Nike Air Max', 'Adidas Ultraboost', 'Jordan 1', 'Yeezy 350', 'New Balance 550']
 
@@ -71,7 +70,7 @@ export function SearchOverlay() {
                         onClick={() => dispatch(closeSearch())}
                         className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors"
                       >
-                        <img src={resolveAssetUrl(product.images?.[0]?.url)} alt={product.name}
+                        <img src={product.images?.[0]?.url} alt={product.name}
                           className="w-10 h-10 rounded-lg object-cover bg-dark-300" />
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium truncate">{product.name}</p>

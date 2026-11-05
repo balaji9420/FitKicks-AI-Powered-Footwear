@@ -7,8 +7,6 @@ import { toggleWishlist } from '../../redux/slices/wishlistSlice'
 import { addToCompare } from '../../redux/slices/uiSlice'
 import { selectWishlistIds } from '../../redux/slices/wishlistSlice'
 import { selectIsAuthenticated } from '../../redux/slices/authSlice'
-
-import { resolveAssetUrl } from '../../services/api'
 import { useNavigate } from 'react-router-dom'
 
 export default function ProductCard({ product, showAIBadge = false, aiScore = null }) {
@@ -18,8 +16,8 @@ export default function ProductCard({ product, showAIBadge = false, aiScore = nu
   const wishlistIds = useSelector(selectWishlistIds)
   const isWishlisted = wishlistIds.includes(product._id)
 
-  const primaryImage = resolveAssetUrl(product.images?.find(i => i.isPrimary)?.url || product.images?.[0]?.url || '/placeholder-shoe.jpg')
-  const hoverImage = resolveAssetUrl(product.images?.[1]?.url)
+  const primaryImage = product.images?.find(i => i.isPrimary)?.url || product.images?.[0]?.url || '/placeholder-shoe.jpg'
+  const hoverImage = product.images?.[1]?.url
 
   const handleWishlist = (e) => {
     e.preventDefault()
@@ -29,8 +27,6 @@ export default function ProductCard({ product, showAIBadge = false, aiScore = nu
 
   const handleAddToCart = async (e) => {
     e.preventDefault()
-
-    if (!product.isInStock) return
 
     if (!isAuthenticated) {
       navigate('/login')
@@ -122,17 +118,13 @@ export default function ProductCard({ product, showAIBadge = false, aiScore = nu
 
           {/* Quick Add */}
           <div className="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-            <button onClick={handleAddToCart} disabled={!product.isInStock}
-              className="w-full bg-primary hover:bg-primary-600 text-white text-sm font-semibold py-3 flex items-center justify-center gap-2 transition-colors disabled:bg-gray-700 disabled:cursor-not-allowed">
-              <ShoppingBag size={14} /> {product.isInStock ? 'Quick Add' : 'Out of Stock'}
+            <button onClick={handleAddToCart}
+              className="w-full bg-primary hover:bg-primary-600 text-white text-sm font-semibold py-3 flex items-center justify-center gap-2 transition-colors">
+              <ShoppingBag size={14} /> Quick Add
             </button>
           </div>
 
-          {!product.isInStock && (
-            <div className="absolute inset-0 bg-dark/45 flex items-center justify-center pointer-events-none">
-              <span className="badge-danger">Out of Stock</span>
-            </div>
-          )}
+          {/* Out of stock overlay */}
 
         </div>
 
@@ -169,6 +161,6 @@ export default function ProductCard({ product, showAIBadge = false, aiScore = nu
           </div>
         </div>
       </Link>
-    </motion.div >
+    </motion.div>
   )
 }

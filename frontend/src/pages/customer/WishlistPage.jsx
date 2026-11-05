@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Heart, ShoppingBag } from 'lucide-react'
 import { fetchWishlist, toggleWishlist, selectWishlist } from '../../redux/slices/wishlistSlice'
-import { resolveAssetUrl } from '../../services/api'
 
 export default function WishlistPage() {
   const dispatch = useDispatch()
@@ -37,7 +36,7 @@ export default function WishlistPage() {
                 className="card group relative">
                 <Link to={`/products/${product.slug}`} className="block">
                   <div className="relative aspect-square bg-dark-300 overflow-hidden">
-                    <img src={resolveAssetUrl(product.images?.[0]?.url)} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <img src={product.images?.[0]?.url} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     {!product.isInStock && (
                       <div className="absolute inset-0 bg-dark/70 flex items-center justify-center">
                         <span className="badge-danger">Out of Stock</span>

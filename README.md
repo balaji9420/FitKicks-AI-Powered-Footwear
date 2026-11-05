@@ -1,24 +1,23 @@
 # 👟 FitKicks — AI-Powered Footwear Shopping Platform
 
 > A production-ready, full-stack e-commerce platform for footwear with an AI outfit-to-shoe recommendation engine.  
-> Built with React, Node.js, MongoDB, and a local retrieval-and-ranking recommender.
+> Built with React, Node.js, MongoDB, and OpenAI Vision API.
 
 ![FitKicks Banner](https://img.shields.io/badge/FitKicks-AI--Powered%20Footwear-FF6B35?style=for-the-badge&logo=data:image/svg+xml;base64,)
 
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=nodedotjs)](https://nodejs.org)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://react.dev)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb)](https://mongodb.com)
+[![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4%20Vision-412991?logo=openai)](https://openai.com)
 
 ---
 
 ## ✨ Key Features
 
 ### 🤖 AI Style Match (Core Feature)
-- Outfit colors are extracted in the browser; style, occasion, and fit are user-selected
-- Local RAG retrieves catalog evidence and ranks every in-stock matching shoe
-- Transparent match scores and direct catalog-based style reviews (not fabricated buyer reviews)
-- Optional per-user ranking adapts to helpfulness feedback, cart additions, and purchases
-- Runs without OpenAI credits or sending outfit images to an external AI service
+- Upload any outfit photo → AI detects colors, style, occasion, gender
+- GPT-4 Vision analyzes outfit aesthetics with 85–98% accuracy
+- Ranked shoe recommendations with **match scores** and **"Why this matches"** explanations
 - Premium / mid / budget tier filtering
 - Recommendation history & feedback loop
 
@@ -100,6 +99,7 @@ fitkicks/
 - Node.js 18+
 - MongoDB Atlas account (free tier works)
 - Cloudinary account (free tier)
+- OpenAI API key (GPT-4 Vision access)
 
 ### 1. Clone & Install
 
@@ -174,7 +174,7 @@ Base URL: `http://localhost:5000/api/v1`
 ### AI
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/ai/analyze` | Rank catalog shoes from a locally extracted outfit palette and selected style |
+| POST | `/ai/analyze` | Upload outfit → get recommendations |
 | GET | `/ai/recommendations` | Rule-based (no image) recommendations |
 | GET | `/ai/history` | User's recommendation history |
 | GET | `/ai/analytics` | AI performance analytics (Admin) |
@@ -203,15 +203,29 @@ Base URL: `http://localhost:5000/api/v1`
 
 ## 🤖 AI Architecture
 
-The recommendation flow is local and does not call a paid model:
+The AI module (`services/ai.service.js`) works in 3 stages:
 
-1. The browser samples the selected outfit image for a coarse color palette; the image itself is not sent to the backend.
-2. The shopper chooses style, occasion, and fit preference.
-3. A BM25-style lexical retriever searches product names, catalog descriptions, materials, tags, and colors.
-4. A transparent ranker combines retrieved evidence, color/style/occasion fit, ratings, saved preferences, and the signed-in shopper's previous feedback and shopping interactions.
-5. The API returns every eligible in-stock product with its retrieved catalog evidence and an explicitly labeled catalog-based style review.
+```
+1. Vision Analysis (OpenAI GPT-4o)
+   └── Sends outfit image + structured prompt
+   └── Returns: colors, style, occasion, gender, outfit tags
 
-Feedback changes the user's future ranking signals; it is lightweight online preference learning, not training a new neural network. Accuracy improves as the catalog and genuine feedback grow. No buyer review is invented, and no OpenAI, ADK, or external vector database is required.
+2. Smart Product Scoring (Custom algorithm)
+   └── Fetches candidates from MongoDB (filtered by occasion + gender)
+   └── Scores each product (0–100) across:
+       • Occasion match (0–30pts)
+       • Style tag match (0–25pts)
+       • Color compatibility (0–20pts)
+       • Gender match (0–15pts)
+       • Shoe type suitability (0–10pts)
+       • Rating bonus (0–5pts)
+
+3. Response Generation (GPT-4o-mini)
+   └── Generates "Why this shoe matches" explanation for top pick
+   └── Returns ranked list: premium / mid / budget tiers
+```
+
+**Swappable:** Replace `analyzeOutfit()` with any vision model (Gemini, Claude Vision, Llama) — the scoring and DB layer stays the same.
 
 ---
 
@@ -300,7 +314,7 @@ npm run build
 | Backend | Node.js + Express.js |
 | Database | MongoDB + Mongoose |
 | Auth | JWT + bcryptjs + Nodemailer |
-| AI | Local catalog RAG + feedback-adaptive ranking |
+| AI | OpenAI GPT-4o Vision |
 | Storage | Cloudinary |
 | Charts | Recharts (Admin) |
 | Payment | Razorpay + Stripe (ready) |

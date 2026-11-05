@@ -6,7 +6,7 @@ const { sendEmail } = require("../services/email.service");
 const { logger } = require("../utils/logger");
 
 const generateTokens = (userId) => ({
-  accessToken: jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || "7d" }),
+  accessToken:  jwt.sign({ id: userId }, process.env.JWT_SECRET,         { expiresIn: process.env.JWT_EXPIRES_IN  || "7d"  }),
   refreshToken: jwt.sign({ id: userId }, process.env.JWT_REFRESH_SECRET, { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || "30d" }),
 });
 
@@ -62,11 +62,10 @@ exports.resendOTP = asyncHandler(async (req, res) => {
 });
 
 exports.login = asyncHandler(async (req, res) => {
-  const email = String(req.body.email || "").trim().toLowerCase();
-  const { password } = req.body;
+  const { email, password } = req.body;
   if (!email || !password) throw new AppError("Email and password required", 400);
   const user = await User.findOne({ email }).select("+password");
-  if (!user || !user.password || !(await user.comparePassword(password))) throw new AppError("Invalid email or password", 401);
+  if (!user || !(await user.comparePassword(password))) throw new AppError("Invalid email or password", 401);
   if (!user.isActive) throw new AppError("Account suspended. Contact support.", 403);
   if (!user.isVerified) {
     return res.status(403).json({ success: false, message: "Verify your email first.", requiresVerification: true, userId: user._id });
@@ -96,15 +95,13 @@ exports.logout = asyncHandler(async (req, res) => {
 });
 
 exports.forgotPassword = asyncHandler(async (req, res) => {
-  const email = String(req.body.email || "").trim().toLowerCase();
-  if (!email) throw new AppError("Email is required", 400);
+  const { email } = req.body;
   const msg = "If that email is registered, a reset link has been sent.";
   const user = await User.findOne({ email });
   if (!user) return res.json({ success: true, message: msg });
   const token = user.generatePasswordResetToken();
   await user.save({ validateBeforeSave: false });
-  if (!process.env.CLIENT_URL) throw new AppError("Password reset URL is not configured", 500);
-  const resetUrl = new URL(`/reset-password/${token}`, process.env.CLIENT_URL).toString();
+  const resetUrl = `${process.env.CLIENT_URL}/reset-password/${token}`;
   await sendEmail({ to: user.email, template: "passwordReset", data: { name: user.firstName, resetUrl, expiresIn: "30 minutes" } });
   res.json({ success: true, message: msg });
 });

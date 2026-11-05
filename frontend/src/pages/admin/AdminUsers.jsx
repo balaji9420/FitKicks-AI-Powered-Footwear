@@ -35,16 +35,11 @@ export default function AdminUsers() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-4">
-        <div>
-          <h1 className="text-2xl font-display font-bold">Users</h1>
-          <p className="text-sm text-gray-500 mt-1" aria-live="polite">
-            {loading ? 'Loading registered users...' : `${pagination?.total ?? users.length} ${search ? 'matching' : 'registered'} users`}
-          </p>
-        </div>
+        <h1 className="text-2xl font-display font-bold">Users</h1>
         <div className="flex gap-2">
           <div className="relative">
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <input value={search} onChange={e => setSearch(e.target.value)} onKeyDown={e => e.key === 'Enter' && load()}
+            <input value={search} onChange={e => setSearch(e.target.value)} onKeyDown={e => e.key==='Enter' && load()}
               placeholder="Search users..." className="input-field pl-9 py-2 text-sm w-48" />
           </div>
           <button onClick={load} className="btn-ghost py-2 px-3"><RefreshCw size={13} /></button>
@@ -54,7 +49,7 @@ export default function AdminUsers() {
       <div className="card overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-dark-300 border-b border-white/5">
-            <tr>{['User', 'Email', 'Orders', 'Spent', 'Points', 'Status', 'Action'].map(h => (
+            <tr>{['User','Email','Orders','Spent','Points','Status','Action'].map(h => (
               <th key={h} className="p-3 text-left text-gray-400 font-medium">{h}</th>
             ))}</tr>
           </thead>
@@ -72,9 +67,9 @@ export default function AdminUsers() {
                   </div>
                 </td>
                 <td className="p-3 text-gray-400">{user.email}</td>
-                <td className="p-3 text-center">{user.totalOrders || 0}</td>
-                <td className="p-3">₹{(user.totalSpent || 0).toLocaleString('en-IN')}</td>
-                <td className="p-3 text-yellow-400">{user.loyaltyPoints || 0}</td>
+                <td className="p-3 text-center">{user.totalOrders||0}</td>
+                <td className="p-3">₹{(user.totalSpent||0).toLocaleString('en-IN')}</td>
+                <td className="p-3 text-yellow-400">{user.loyaltyPoints||0}</td>
                 <td className="p-3">
                   <span className={`badge text-xs ${user.isActive ? 'badge-success' : 'badge-danger'}`}>
                     {user.isActive ? 'Active' : 'Suspended'}
@@ -92,10 +87,11 @@ export default function AdminUsers() {
         </table>
         {pagination && pagination.pages > 1 && (
           <div className="flex justify-between items-center p-4 border-t border-white/5">
+            <span className="text-xs text-gray-500">{pagination.total} users total</span>
             <div className="flex gap-1">
-              <button disabled={page <= 1} onClick={() => setPage(p => p - 1)} className="px-3 py-1.5 rounded-lg bg-dark-300 text-sm disabled:opacity-40">←</button>
+              <button disabled={page<=1} onClick={() => setPage(p=>p-1)} className="px-3 py-1.5 rounded-lg bg-dark-300 text-sm disabled:opacity-40">←</button>
               <span className="px-3 py-1.5 text-sm text-gray-400">{page} / {pagination.pages}</span>
-              <button disabled={page >= pagination.pages} onClick={() => setPage(p => p + 1)} className="px-3 py-1.5 rounded-lg bg-dark-300 text-sm disabled:opacity-40">→</button>
+              <button disabled={page>=pagination.pages} onClick={() => setPage(p=>p+1)} className="px-3 py-1.5 rounded-lg bg-dark-300 text-sm disabled:opacity-40">→</button>
             </div>
           </div>
         )}
